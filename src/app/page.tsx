@@ -1,12 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 
 const calculators = [
   {
     icon: "🚗",
     name: "Kalkulator kosztu przejazdu",
-    description: "Oblicz koszt paliwa podczas podróży.",
+    description: "Sprawdź koszt paliwa, dystans i koszt podróży na osobę.",
     category: "Motoryzacja",
     keywords: "przejazd paliwo podróż samochód auto trasa km",
     href: "/motoryzacja/koszt-przejazdu",
@@ -14,15 +17,15 @@ const calculators = [
   {
     icon: "⛽",
     name: "Kalkulator spalania",
-    description: "Oblicz średnie spalanie samochodu.",
+    description: "Oblicz rzeczywiste spalanie samochodu w l/100 km.",
     category: "Motoryzacja",
-    keywords: "spalanie samochód auto paliwo l/100 benzyna diesel",
+    keywords: "spalanie samochód auto paliwo benzyna diesel l/100",
     href: "/motoryzacja/spalanie",
   },
   {
     icon: "💰",
     name: "Kalkulator kosztu paliwa",
-    description: "Sprawdź, ile zapłacisz za paliwo.",
+    description: "Policz, ile zapłacisz za paliwo na wybranej trasie.",
     category: "Motoryzacja",
     keywords: "paliwo benzyna diesel ropa cena koszt trasa",
     href: "/motoryzacja/koszt-paliwa",
@@ -30,32 +33,31 @@ const calculators = [
   {
     icon: "🚘",
     name: "Kalkulator sprowadzenia auta",
-    description: "Oblicz orientacyjny koszt importu samochodu.",
+    description: "Oszacuj orientacyjny koszt importu samochodu.",
     category: "Motoryzacja",
     keywords: "samochód auto import sprowadzenie niemcy akcyza",
     href: "/motoryzacja/sprowadzenie-auta",
   },
-
   {
     icon: "🏗️",
     name: "Kalkulator betonu",
-    description: "Oblicz ilość potrzebnego betonu.",
+    description: "Oblicz objętość betonu potrzebnego do konstrukcji.",
     category: "Budowa i remont",
-    keywords: "beton budowa fundament posadzka m3",
-    href: "#",
+    keywords: "beton budowa fundament płyta posadzka m3",
+    href: "/budowa-remont/beton",
   },
   {
     icon: "🧱",
     name: "Kalkulator kostki brukowej",
-    description: "Oblicz ilość kostki potrzebnej na powierzchnię.",
+    description: "Sprawdź potrzebną ilość kostki na podjazd lub chodnik.",
     category: "Budowa i remont",
-    keywords: "kostka brukowa podjazd taras plac m2",
+    keywords: "kostka brukowa podjazd taras chodnik m2",
     href: "#",
   },
   {
     icon: "🎨",
     name: "Kalkulator farby",
-    description: "Oblicz, ile farby potrzebujesz.",
+    description: "Policz ilość farby potrzebnej do malowania.",
     category: "Budowa i remont",
     keywords: "farba malowanie ściana sufit litry",
     href: "#",
@@ -63,37 +65,35 @@ const calculators = [
   {
     icon: "🧱",
     name: "Kalkulator płytek",
-    description: "Oblicz liczbę potrzebnych płytek.",
+    description: "Oblicz liczbę płytek i zapas potrzebny do remontu.",
     category: "Budowa i remont",
-    keywords: "płytki kafelki łazienka podłoga m2",
+    keywords: "płytki kafelki łazienka podłoga ściana m2",
     href: "#",
   },
-
   {
     icon: "💵",
     name: "Kalkulator VAT",
-    description: "Oblicz kwotę netto, brutto i VAT.",
+    description: "Oblicz kwoty netto, VAT i brutto.",
     category: "Finanse",
-    keywords: "vat brutto netto podatek faktura",
+    keywords: "vat netto brutto podatek faktura",
     href: "#",
   },
   {
     icon: "📊",
     name: "Kalkulator marży",
-    description: "Oblicz marżę i cenę sprzedaży.",
+    description: "Oblicz marżę, narzut i cenę sprzedaży.",
     category: "Finanse",
-    keywords: "marża sprzedaż zysk cena procent",
+    keywords: "marża narzut zysk cena sprzedaż procent",
     href: "#",
   },
   {
     icon: "🏦",
     name: "Kalkulator raty",
-    description: "Oblicz orientacyjną wysokość raty.",
+    description: "Oszacuj wysokość raty na podstawie parametrów kredytu.",
     category: "Finanse",
     keywords: "rata kredyt pożyczka oprocentowanie",
     href: "#",
   },
-
   {
     icon: "⚡",
     name: "Kalkulator zużycia prądu",
@@ -113,9 +113,9 @@ const calculators = [
   {
     icon: "📐",
     name: "Kalkulator powierzchni",
-    description: "Oblicz powierzchnię pomieszczenia.",
+    description: "Policz powierzchnię pomieszczenia lub ściany.",
     category: "Dom",
-    keywords: "powierzchnia metry kwadratowe m2 pokój",
+    keywords: "powierzchnia metry kwadratowe m2 pokój ściana",
     href: "#",
   },
 ];
@@ -124,120 +124,153 @@ const categories = [
   {
     icon: "🚗",
     name: "Motoryzacja",
-    description: "Samochody, paliwo, spalanie i podróże",
+    description: "Spalanie, paliwo, podróże i koszty samochodu.",
     href: "/motoryzacja",
+    count: 4,
   },
   {
     icon: "🏗️",
     name: "Budowa i remont",
-    description: "Materiały, powierzchnie i ilości",
-    href: "#",
+    description: "Materiały, powierzchnie i ilości potrzebne na budowie.",
+    href: "/budowa-remont",
+    count: 5,
   },
   {
     icon: "💰",
     name: "Finanse",
-    description: "Pieniądze, podatki i obliczenia",
-    href: "#",
+    description: "VAT, marża, raty, procenty i codzienne finanse.",
+    href: "#kalkulatory",
+    count: 3,
   },
   {
     icon: "🏠",
     name: "Dom",
-    description: "Koszty i obliczenia związane z domem",
-    href: "#",
+    description: "Prąd, ogrzewanie, powierzchnia i inne obliczenia.",
+    href: "#kalkulatory",
+    count: 3,
   },
 ];
+
+const popular = calculators.slice(0, 5);
 
 export default function Home() {
   const [search, setSearch] = useState("");
 
-  const filteredCalculators = calculators.filter((calculator) => {
-    const query = search.toLowerCase().trim();
+  const results = useMemo(() => {
+    const query = search.trim().toLowerCase();
 
-    if (!query) return true;
+    if (!query) {
+      return [];
+    }
 
-    const text = `
-      ${calculator.name}
-      ${calculator.description}
-      ${calculator.category}
-      ${calculator.keywords}
-    `.toLowerCase();
-
-    return text.includes(query);
-  });
+    return calculators.filter((calculator) =>
+      `${calculator.name} ${calculator.description} ${calculator.category} ${calculator.keywords}`
+        .toLowerCase()
+        .includes(query),
+    );
+  }, [search]);
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
 
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+      <Header />
 
-          <a
-            href="/"
-            className="text-xl font-extrabold tracking-tight"
-          >
-            POLICZ<span className="text-blue-600">DOBRZE</span>
-          </a>
+      {/* HERO */}
+      <section className="relative overflow-hidden border-b border-slate-200 bg-white">
 
-          <nav className="hidden gap-8 text-sm font-medium text-slate-600 md:flex">
-            <a
-              href="#kalkulatory"
-              className="hover:text-blue-600"
-            >
-              Kalkulatory
-            </a>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(37,99,235,0.12),_transparent_35%),radial-gradient(circle_at_top_left,_rgba(15,23,42,0.06),_transparent_30%)]" />
 
-            <a
-              href="#jak-dziala"
-              className="hover:text-blue-600"
-            >
-              Jak to działa?
-            </a>
-          </nav>
+        <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-16 sm:px-6 sm:pt-20 lg:px-8 lg:pb-24">
 
-        </div>
-      </header>
+          <div className="mx-auto max-w-4xl text-center">
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700">
+              ⚡ Darmowe narzędzia online
+            </div>
 
 
-      <section className="bg-white">
-
-        <div className="mx-auto max-w-6xl px-6 pb-16 pt-20 text-center">
-
-          <p className="mb-4 text-sm font-semibold uppercase tracking-widest text-blue-600">
-            Darmowe narzędzia online
-          </p>
-
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-6xl">
-            Policz to dobrze.
-          </h1>
-
-          <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
-            Proste kalkulatory, które pomagają szybko obliczyć
-            koszty, ilości i wartości potrzebne w codziennym życiu.
-          </p>
+            <h1 className="mt-7 text-5xl font-black tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+              Policz to.
+              <span className="block text-blue-600">
+                Dobrze.
+              </span>
+            </h1>
 
 
-          <div className="mx-auto mt-9 flex max-w-2xl items-center rounded-2xl border border-slate-200 bg-white p-2 shadow-lg">
+            <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
+              Kalkulatory, które pomagają szybko obliczyć koszty,
+              ilości i wartości potrzebne w codziennym życiu.
+            </p>
 
-            <span className="px-4 text-xl">
-              🔎
-            </span>
 
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Czego chcesz poszukać? np. beton, paliwo, VAT..."
-              className="w-full bg-transparent px-2 py-3 text-sm outline-none sm:text-base"
-            />
+            <div className="mx-auto mt-9 max-w-3xl">
 
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                className="mr-2 rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100"
-              >
-                ✕
-              </button>
-            )}
+              <div className="flex items-center rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-200/60 ring-1 ring-slate-100">
+
+                <span className="px-4 text-xl">
+                  🔎
+                </span>
+
+
+                <input
+                  type="search"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder="Co chcesz policzyć? np. paliwo, beton, VAT..."
+                  className="w-full bg-transparent px-2 py-4 text-base outline-none placeholder:text-slate-400 sm:text-lg"
+                />
+
+
+                {search && (
+
+                  <button
+                    type="button"
+                    onClick={() => setSearch("")}
+                    className="mr-2 rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                    aria-label="Wyczyść wyszukiwanie"
+                  >
+                    ✕
+                  </button>
+
+                )}
+
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    document
+                      .getElementById("kalkulatory")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                  className="hidden rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-blue-700 sm:block"
+                >
+                  Szukaj
+                </button>
+
+              </div>
+
+
+              <div className="mt-4 flex flex-wrap justify-center gap-2 text-sm">
+
+                {[
+                  ["Spalanie", "/motoryzacja/spalanie"],
+                  ["Koszt przejazdu", "/motoryzacja/koszt-przejazdu"],
+                  ["Beton", "/budowa-remont/beton"],
+                ].map(([label, href]) => (
+
+                  <Link
+                    key={label}
+                    href={href}
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 transition hover:border-blue-200 hover:text-blue-600"
+                  >
+                    {label}
+                  </Link>
+
+                ))}
+
+              </div>
+
+            </div>
 
           </div>
 
@@ -246,52 +279,53 @@ export default function Home() {
       </section>
 
 
+      {/* SEARCH RESULTS */}
       {search.trim() && (
 
-        <section className="mx-auto max-w-6xl px-6 pb-10 pt-10">
+        <section className="mx-auto max-w-7xl px-5 py-12 sm:px-6 lg:px-8">
 
           <div className="mb-6">
 
-            <h2 className="text-2xl font-bold">
-              Wyniki wyszukiwania
-            </h2>
+            <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
+              Wyszukiwanie
+            </div>
 
-            <p className="mt-1 text-sm text-slate-500">
-              Wyniki dla: <strong>{search}</strong>
-            </p>
+            <h2 className="mt-2 text-3xl font-black text-slate-950">
+              Wyniki dla „{search}”
+            </h2>
 
           </div>
 
 
-          {filteredCalculators.length > 0 ? (
+          {results.length > 0 ? (
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
-              {filteredCalculators.map((calculator) => (
+              {results.map((calculator) => (
 
-                <a
+                <Link
                   key={calculator.name}
                   href={calculator.href}
-                  className="group rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
+                  className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
                 >
 
-                  <div className="mb-4 text-3xl">
+                  <div className="text-3xl">
                     {calculator.icon}
                   </div>
 
-                  <div className="font-semibold group-hover:text-blue-600">
+                  <h3 className="mt-4 font-bold text-slate-950 group-hover:text-blue-600">
                     {calculator.name}
-                  </div>
+                  </h3>
 
                   <p className="mt-2 text-sm leading-6 text-slate-500">
                     {calculator.description}
                   </p>
 
-                  <div className="mt-4 text-xs font-medium text-blue-600">
+                  <div className="mt-4 text-xs font-bold uppercase tracking-wider text-blue-600">
                     {calculator.category}
                   </div>
 
-                </a>
+                </Link>
 
               ))}
 
@@ -299,18 +333,18 @@ export default function Home() {
 
           ) : (
 
-            <div className="rounded-3xl border border-slate-200 bg-white p-10 text-center">
+            <div className="rounded-3xl border border-dashed border-slate-300 bg-white p-12 text-center">
 
               <div className="text-4xl">
                 🔎
               </div>
 
               <h3 className="mt-4 text-xl font-bold">
-                Nie znaleźliśmy kalkulatora
+                Nie znaleźliśmy takiego kalkulatora
               </h3>
 
               <p className="mt-2 text-slate-500">
-                Spróbuj wyszukać coś innego.
+                Spróbuj innego hasła.
               </p>
 
             </div>
@@ -322,167 +356,215 @@ export default function Home() {
       )}
 
 
+      {/* CATEGORIES */}
       <section
         id="kalkulatory"
-        className="mx-auto max-w-6xl px-6 py-14"
+        className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8"
       >
 
-        <div className="mb-8">
+        <div className="max-w-2xl">
 
-          <h2 className="text-2xl font-bold">
+          <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
             Kategorie
+          </div>
+
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-slate-950 sm:text-4xl">
+            Wybierz, co chcesz policzyć
           </h2>
 
-          <p className="mt-1 text-slate-500">
-            Wybierz temat, który Cię interesuje.
+          <p className="mt-4 text-lg leading-8 text-slate-600">
+            Wszystkie narzędzia w jednym miejscu. Z czasem będziemy
+            dodawać kolejne.
           </p>
 
         </div>
 
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="mt-9 grid gap-5 md:grid-cols-2">
 
-          {categories.map((category) => {
+          {categories.map((category) => (
 
-            const categoryCalculators = calculators.filter(
-              (calculator) =>
-                calculator.category === category.name
-            );
+            <Link
+              key={category.name}
+              href={category.href}
+              className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
+            >
 
-            return (
+              <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-blue-50 blur-2xl transition group-hover:bg-blue-100" />
 
-              <a
-                key={category.name}
-                href={category.href}
-                className="block rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-md"
+
+              <div className="relative flex items-start justify-between gap-5">
+
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-3xl text-white">
+                  {category.icon}
+                </div>
+
+
+                <div className="flex-1">
+
+                  <h3 className="text-2xl font-black text-slate-950 group-hover:text-blue-600">
+                    {category.name}
+                  </h3>
+
+                  <p className="mt-2 max-w-md leading-7 text-slate-500">
+                    {category.description}
+                  </p>
+
+                </div>
+
+
+                <div className="hidden text-2xl text-slate-300 transition group-hover:text-blue-600 sm:block">
+                  →
+                </div>
+
+              </div>
+
+
+              <div className="relative mt-7 flex items-center justify-between border-t border-slate-100 pt-4 text-sm">
+
+                <span className="font-semibold text-slate-500">
+                  {category.count} narzędzia
+                </span>
+
+                <span className="font-bold text-blue-600">
+                  Zobacz kategorię →
+                </span>
+
+              </div>
+
+            </Link>
+
+          ))}
+
+        </div>
+
+      </section>
+
+
+      {/* POPULAR */}
+      <section className="border-y border-slate-200 bg-white py-16">
+
+        <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
+
+          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+
+            <div>
+
+              <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
+                Na start
+              </div>
+
+              <h2 className="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">
+                Najważniejsze kalkulatory
+              </h2>
+
+            </div>
+
+
+            <Link
+              href="#kalkulatory"
+              className="font-bold text-blue-600 hover:text-blue-700"
+            >
+              Zobacz wszystkie →
+            </Link>
+
+          </div>
+
+
+          <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+
+            {popular.map((calculator) => (
+
+              <Link
+                key={calculator.name}
+                href={calculator.href}
+                className="group rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg"
               >
 
-                <div className="flex items-start gap-4">
-
-                  <div className="text-4xl">
-                    {category.icon}
-                  </div>
-
-                  <div>
-
-                    <h3 className="text-xl font-bold">
-                      {category.name}
-                    </h3>
-
-                    <p className="mt-1 text-sm text-slate-500">
-                      {category.description}
-                    </p>
-
-                  </div>
-
+                <div className="text-3xl">
+                  {calculator.icon}
                 </div>
 
+                <h3 className="mt-4 text-sm font-bold leading-5 text-slate-950 group-hover:text-blue-600">
+                  {calculator.name}
+                </h3>
 
-                <div className="mt-6 space-y-2">
-
-                  {categoryCalculators.map((calculator) => (
-
-                    <div
-                      key={calculator.name}
-                      className="flex items-center justify-between rounded-xl bg-slate-50 px-4 py-3 text-sm font-medium"
-                    >
-
-                      <span>
-                        {calculator.icon} {calculator.name}
-                      </span>
-
-                      <span>
-                        →
-                      </span>
-
-                    </div>
-
-                  ))}
-
+                <div className="mt-4 text-xs font-bold text-blue-600">
+                  Otwórz →
                 </div>
 
-              </a>
+              </Link>
 
-            );
+            ))}
 
-          })}
+          </div>
 
         </div>
 
       </section>
 
 
+      {/* HOW IT WORKS */}
       <section
         id="jak-dziala"
-        className="bg-white py-16"
+        className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8"
       >
 
-        <div className="mx-auto max-w-6xl px-6">
+        <div className="rounded-[2rem] bg-slate-950 px-7 py-10 text-white sm:px-10 sm:py-12">
 
-          <div className="mx-auto max-w-2xl text-center">
+          <div className="max-w-2xl">
 
-            <h2 className="text-3xl font-bold">
+            <div className="text-sm font-bold uppercase tracking-wider text-blue-300">
               Jak to działa?
-            </h2>
+            </div>
 
-            <p className="mt-3 text-slate-500">
-              Bez rejestracji. Bez zbędnego komplikowania.
-            </p>
+            <h2 className="mt-2 text-3xl font-black sm:text-4xl">
+              Bez konta. Bez kombinowania.
+            </h2>
 
           </div>
 
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
+          <div className="mt-10 grid gap-8 md:grid-cols-3">
 
-            <div className="rounded-3xl bg-slate-50 p-7 text-center">
+            {[
+              [
+                "01",
+                "Znajdź narzędzie",
+                "Wyszukaj kalkulator lub wybierz kategorię.",
+              ],
+              [
+                "02",
+                "Wpisz dane",
+                "Podaj kilka prostych wartości potrzebnych do obliczenia.",
+              ],
+              [
+                "03",
+                "Dostajesz wynik",
+                "Wynik otrzymujesz od razu, bez rejestracji.",
+              ],
+            ].map(([number, title, description]) => (
 
-              <div className="text-4xl">
-                🔎
+              <div
+                key={number}
+                className="border-t border-white/10 pt-5"
+              >
+
+                <div className="text-sm font-black text-blue-300">
+                  {number}
+                </div>
+
+                <h3 className="mt-3 text-xl font-bold">
+                  {title}
+                </h3>
+
+                <p className="mt-2 leading-7 text-slate-400">
+                  {description}
+                </p>
+
               </div>
 
-              <h3 className="mt-4 font-bold">
-                1. Znajdź narzędzie
-              </h3>
-
-              <p className="mt-2 text-sm leading-6 text-slate-500">
-                Wyszukaj kalkulator lub wybierz kategorię.
-              </p>
-
-            </div>
-
-
-            <div className="rounded-3xl bg-slate-50 p-7 text-center">
-
-              <div className="text-4xl">
-                ✏️
-              </div>
-
-              <h3 className="mt-4 font-bold">
-                2. Wpisz dane
-              </h3>
-
-              <p className="mt-2 text-sm leading-6 text-slate-500">
-                Podaj wartości potrzebne do obliczenia.
-              </p>
-
-            </div>
-
-
-            <div className="rounded-3xl bg-slate-50 p-7 text-center">
-
-              <div className="text-4xl">
-                ✅
-              </div>
-
-              <h3 className="mt-4 font-bold">
-                3. Otrzymaj wynik
-              </h3>
-
-              <p className="mt-2 text-sm leading-6 text-slate-500">
-                Wynik otrzymasz natychmiast.
-              </p>
-
-            </div>
+            ))}
 
           </div>
 
@@ -491,21 +573,7 @@ export default function Home() {
       </section>
 
 
-      <footer className="border-t border-slate-200 bg-white">
-
-        <div className="mx-auto flex max-w-6xl flex-col gap-3 px-6 py-8 text-sm text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-
-          <div>
-            © {new Date().getFullYear()} PoliczDobrze.pl
-          </div>
-
-          <div>
-            Darmowe kalkulatory online
-          </div>
-
-        </div>
-
-      </footer>
+      <Footer />
 
     </main>
   );

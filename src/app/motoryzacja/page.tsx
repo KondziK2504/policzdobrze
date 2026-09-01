@@ -1,7 +1,9 @@
+import Link from "next/link";
+
 export const metadata = {
   title: "Kalkulatory motoryzacyjne",
   description:
-    "Darmowe kalkulatory motoryzacyjne. Oblicz spalanie, koszt paliwa, koszt przejazdu oraz koszt sprowadzenia samochodu.",
+    "Darmowe kalkulatory motoryzacyjne. Oblicz spalanie samochodu, koszt paliwa, koszt przejazdu i koszt sprowadzenia auta.",
 };
 
 const calculators = [
@@ -9,7 +11,7 @@ const calculators = [
     icon: "🚗",
     title: "Kalkulator kosztu przejazdu",
     description:
-      "Sprawdź, ile będzie kosztować przejazd samochodem na wybranej trasie.",
+      "Oblicz koszt paliwa podczas podróży, koszt 100 km oraz koszt przypadający na jedną osobę.",
     href: "/motoryzacja/koszt-przejazdu",
   },
 
@@ -17,7 +19,7 @@ const calculators = [
     icon: "⛽",
     title: "Kalkulator spalania",
     description:
-      "Oblicz średnie spalanie samochodu na podstawie przejechanej trasy i zużytego paliwa.",
+      "Sprawdź rzeczywiste spalanie samochodu w l/100 km oraz koszt przejechania 100 km.",
     href: "/motoryzacja/spalanie",
   },
 
@@ -25,7 +27,7 @@ const calculators = [
     icon: "💰",
     title: "Kalkulator kosztu paliwa",
     description:
-      "Oblicz koszt paliwa dla dowolnej trasy, spalania i aktualnej ceny paliwa.",
+      "Sprawdź, ile paliwa potrzebujesz i ile kosztuje przejazd wybranej trasy.",
     href: "/motoryzacja/koszt-paliwa",
   },
 
@@ -33,7 +35,7 @@ const calculators = [
     icon: "🚘",
     title: "Kalkulator sprowadzenia auta",
     description:
-      "Oszacuj orientacyjny koszt sprowadzenia samochodu z zagranicy.",
+      "Oszacuj orientacyjny koszt importu samochodu z zagranicy.",
     href: "/motoryzacja/sprowadzenie-auta",
   },
 ];
@@ -42,47 +44,47 @@ export default function MotoryzacjaPage() {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
 
-      <header className="border-b border-slate-200 bg-white">
+      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
 
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
 
-          <a
+          <Link
             href="/"
             className="text-xl font-extrabold tracking-tight"
           >
             POLICZ<span className="text-blue-600">DOBRZE</span>
-          </a>
+          </Link>
 
-          <a
+          <Link
             href="/"
-            className="text-sm font-medium text-slate-600 hover:text-blue-600"
+            className="rounded-xl px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-blue-600"
           >
             ← Strona główna
-          </a>
+          </Link>
 
         </div>
 
       </header>
 
 
-      <section className="bg-white">
+      <section className="border-b border-slate-200 bg-white">
 
-        <div className="mx-auto max-w-6xl px-6 pb-16 pt-16">
+        <div className="mx-auto max-w-6xl px-6 pb-16 pt-14">
 
           <div className="max-w-3xl">
 
-            <div className="text-5xl">
+            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-4xl">
               🚗
             </div>
 
-            <h1 className="mt-6 text-4xl font-extrabold tracking-tight sm:text-5xl">
+            <h1 className="mt-7 text-4xl font-extrabold tracking-tight sm:text-5xl">
               Kalkulatory motoryzacyjne
             </h1>
 
             <p className="mt-5 text-lg leading-8 text-slate-600">
-              Darmowe narzędzia dla kierowców. Oblicz koszty
-              podróży, spalanie samochodu, koszt paliwa lub
-              sprawdź orientacyjny koszt sprowadzenia auta.
+              Darmowe narzędzia dla kierowców. Oblicz spalanie,
+              koszt paliwa, koszt przejazdu albo orientacyjny
+              koszt sprowadzenia samochodu.
             </p>
 
           </div>
@@ -98,7 +100,7 @@ export default function MotoryzacjaPage() {
 
           {calculators.map((calculator) => (
 
-            <a
+            <Link
               key={calculator.href}
               href={calculator.href}
               className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
@@ -120,7 +122,7 @@ export default function MotoryzacjaPage() {
                 Otwórz kalkulator →
               </div>
 
-            </a>
+            </Link>
 
           ))}
 
@@ -138,82 +140,17 @@ export default function MotoryzacjaPage() {
           </h2>
 
           <p className="mt-5 leading-8 text-slate-600">
-            Koszt paliwa jest jednym z podstawowych wydatków
-            związanych z samochodem. Znając dystans, średnie
-            spalanie oraz cenę paliwa, można szybko obliczyć
-            orientacyjny koszt podróży.
+            Kalkulatory motoryzacyjne pomagają szybko sprawdzić
+            koszty codziennej jazdy oraz planowania podróży.
+            Możesz obliczyć między innymi średnie spalanie,
+            koszt paliwa i całkowity koszt przejazdu.
           </p>
 
           <p className="mt-5 leading-8 text-slate-600">
-            Na PoliczDobrze.pl znajdziesz również narzędzia
-            pozwalające obliczyć średnie spalanie samochodu
-            oraz oszacować koszt sprowadzenia auta z zagranicy.
+            W przyszłości kategoria zostanie rozszerzona
+            o kolejne narzędzia związane z kosztami samochodu,
+            importem oraz eksploatacją.
           </p>
-
-          <p className="mt-5 leading-8 text-slate-600">
-            Wszystkie kalkulatory są dostępne bez rejestracji
-            i można z nich korzystać bezpłatnie.
-          </p>
-
-        </div>
-
-      </section>
-
-
-      <section className="px-6 py-16">
-
-        <div className="mx-auto max-w-4xl rounded-3xl border border-slate-200 bg-white p-8 shadow-sm">
-
-          <h2 className="text-2xl font-bold">
-            Najczęściej zadawane pytania
-          </h2>
-
-
-          <div className="mt-8 space-y-7">
-
-            <div>
-
-              <h3 className="font-bold">
-                Jak obliczyć koszt przejazdu samochodem?
-              </h3>
-
-              <p className="mt-2 leading-7 text-slate-600">
-                Wystarczy znać dystans, średnie spalanie
-                samochodu oraz cenę paliwa. Na tej podstawie
-                można obliczyć ilość potrzebnego paliwa i jego koszt.
-              </p>
-
-            </div>
-
-
-            <div>
-
-              <h3 className="font-bold">
-                Jak obliczyć spalanie samochodu?
-              </h3>
-
-              <p className="mt-2 leading-7 text-slate-600">
-                Najprościej podzielić ilość zużytego paliwa przez
-                przejechany dystans i pomnożyć wynik przez 100.
-              </p>
-
-            </div>
-
-
-            <div>
-
-              <h3 className="font-bold">
-                Czy kalkulatory są darmowe?
-              </h3>
-
-              <p className="mt-2 leading-7 text-slate-600">
-                Tak. Korzystanie z kalkulatorów PoliczDobrze.pl
-                nie wymaga rejestracji.
-              </p>
-
-            </div>
-
-          </div>
 
         </div>
 
@@ -223,9 +160,7 @@ export default function MotoryzacjaPage() {
       <footer className="border-t border-slate-200 bg-white">
 
         <div className="mx-auto max-w-6xl px-6 py-8 text-center text-sm text-slate-500">
-
           © {new Date().getFullYear()} PoliczDobrze.pl
-
         </div>
 
       </footer>

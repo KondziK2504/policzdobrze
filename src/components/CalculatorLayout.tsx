@@ -1,10 +1,21 @@
 import Link from "next/link";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { ReactNode } from "react";
+
+type RelatedCalculator = {
+  title: string;
+  href: string;
+  icon: string;
+};
 
 type CalculatorLayoutProps = {
   icon: string;
   title: string;
   description: string;
+  categoryName?: string;
+  categoryHref?: string;
+  related?: RelatedCalculator[];
   children: ReactNode;
 };
 
@@ -12,65 +23,127 @@ export default function CalculatorLayout({
   icon,
   title,
   description,
+  categoryName = "Kalkulatory",
+  categoryHref = "/#kalkulatory",
+  related = [],
   children,
 }: CalculatorLayoutProps) {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
 
-      <header className="border-b border-slate-200 bg-white">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
+      <Header />
 
-          <Link
-            href="/"
-            className="text-xl font-extrabold tracking-tight"
-          >
-            POLICZ<span className="text-blue-600">DOBRZE</span>
-          </Link>
+      {/* HERO */}
+      <section className="border-b border-slate-200 bg-white">
 
-          <Link
-            href="/"
-            className="text-sm font-medium text-slate-600 hover:text-blue-600"
-          >
-            ← Wszystkie kalkulatory
-          </Link>
+        <div className="mx-auto max-w-6xl px-5 pb-12 pt-8 sm:px-6 sm:pb-14 lg:px-8">
 
-        </div>
-      </header>
+          <div className="mb-8 flex flex-wrap items-center gap-2 text-sm text-slate-500">
 
+            <Link
+              href="/"
+              className="hover:text-blue-600"
+            >
+              PoliczDobrze
+            </Link>
 
-      <section className="bg-white">
-        <div className="mx-auto max-w-4xl px-6 pb-14 pt-14 text-center">
+            <span>/</span>
 
-          <div className="text-5xl">
-            {icon}
+            <Link
+              href={categoryHref}
+              className="hover:text-blue-600"
+            >
+              {categoryName}
+            </Link>
+
+            <span>/</span>
+
+            <span className="text-slate-700">
+              {title}
+            </span>
+
           </div>
 
-          <h1 className="mt-5 text-4xl font-extrabold tracking-tight sm:text-5xl">
-            {title}
-          </h1>
 
-          <p className="mx-auto mt-4 max-w-2xl text-lg leading-8 text-slate-600">
-            {description}
-          </p>
+          <div className="mx-auto max-w-3xl text-center">
+
+            <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-4xl shadow-sm ring-1 ring-blue-100">
+              {icon}
+            </div>
+
+            <h1 className="mt-6 text-4xl font-black tracking-tight text-slate-950 sm:text-5xl">
+              {title}
+            </h1>
+
+            <p className="mx-auto mt-5 max-w-2xl text-lg leading-8 text-slate-600">
+              {description}
+            </p>
+
+          </div>
 
         </div>
+
       </section>
 
 
-      <section className="px-6 py-12">
+      {/* CALCULATOR */}
+      <section className="px-5 py-10 sm:px-6 sm:py-14 lg:px-8">
         {children}
       </section>
 
 
-      <footer className="border-t border-slate-200 bg-white">
+      {/* RELATED */}
+      {related.length > 0 && (
 
-        <div className="mx-auto max-w-6xl px-6 py-8 text-center text-sm text-slate-500">
+        <section className="border-t border-slate-200 bg-white py-14">
 
-          © {new Date().getFullYear()} PoliczDobrze.pl
+          <div className="mx-auto max-w-6xl px-5 sm:px-6 lg:px-8">
 
-        </div>
+            <h2 className="text-2xl font-extrabold text-slate-950">
+              Przydatne kalkulatory
+            </h2>
 
-      </footer>
+            <p className="mt-2 text-slate-500">
+              Sprawdź również inne narzędzia związane z tym tematem.
+            </p>
+
+
+            <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+
+              {related.map((calculator) => (
+
+                <Link
+                  key={calculator.href}
+                  href={calculator.href}
+                  className="group rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg"
+                >
+
+                  <div className="text-3xl">
+                    {calculator.icon}
+                  </div>
+
+                  <div className="mt-4 font-bold text-slate-900 group-hover:text-blue-600">
+                    {calculator.title}
+                  </div>
+
+                  <div className="mt-3 text-sm font-semibold text-blue-600">
+                    Otwórz kalkulator →
+                  </div>
+
+                </Link>
+
+              ))}
+
+            </div>
+
+          </div>
+
+        </section>
+
+      )}
+
+
+      <Footer />
 
     </main>
   );

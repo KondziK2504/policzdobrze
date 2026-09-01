@@ -6,4 +6,15 @@ html {
 
 body {
   margin: 0;
+  padding: 0;
+  background: #f8fafc;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #dbeafe;
+  color: #0f172a;
 }

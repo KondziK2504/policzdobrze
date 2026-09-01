@@ -22,18 +22,38 @@ export default function BetonPage() {
       icon="🏗️"
       title="Kalkulator betonu"
       description="Oblicz, ile betonu potrzebujesz do fundamentu, posadzki, płyty lub innej konstrukcji."
+      categoryName="Budowa i remont"
+      categoryHref="/budowa-remont"
+      related={[
+        {
+          icon: "🧱",
+          title: "Kalkulator kostki brukowej",
+          href: "#",
+        },
+        {
+          icon: "🎨",
+          title: "Kalkulator farby",
+          href: "#",
+        },
+        {
+          icon: "🧱",
+          title: "Kalkulator płytek",
+          href: "#",
+        },
+      ]}
     >
 
-      <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-2">
+      <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-2">
 
         <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
           <h2 className="text-xl font-bold">
-            Wymiary
+            Wymiary konstrukcji
           </h2>
 
-          <p className="mt-2 text-sm text-slate-500">
-            Podaj wymiary elementu w metrach.
+          <p className="mt-2 text-sm leading-6 text-slate-500">
+            Podaj długość, szerokość oraz grubość elementu
+            w metrach.
           </p>
 
 
@@ -41,7 +61,7 @@ export default function BetonPage() {
 
             <div>
 
-              <label className="mb-2 block text-sm font-medium">
+              <label className="mb-2 block text-sm font-semibold">
                 Długość
               </label>
 
@@ -54,7 +74,7 @@ export default function BetonPage() {
                   value={length}
                   onChange={(e) => setLength(e.target.value)}
                   placeholder="np. 10"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -68,7 +88,7 @@ export default function BetonPage() {
 
             <div>
 
-              <label className="mb-2 block text-sm font-medium">
+              <label className="mb-2 block text-sm font-semibold">
                 Szerokość
               </label>
 
@@ -81,7 +101,7 @@ export default function BetonPage() {
                   value={width}
                   onChange={(e) => setWidth(e.target.value)}
                   placeholder="np. 5"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -95,8 +115,8 @@ export default function BetonPage() {
 
             <div>
 
-              <label className="mb-2 block text-sm font-medium">
-                Wysokość / grubość
+              <label className="mb-2 block text-sm font-semibold">
+                Grubość / wysokość
               </label>
 
               <div className="relative">
@@ -108,7 +128,7 @@ export default function BetonPage() {
                   value={height}
                   onChange={(e) => setHeight(e.target.value)}
                   placeholder="np. 0.15"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none focus:border-blue-500"
+                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-12 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -124,7 +144,7 @@ export default function BetonPage() {
         </div>
 
 
-        <div className="rounded-3xl bg-slate-900 p-7 text-white">
+        <div className="rounded-3xl bg-slate-950 p-7 text-white shadow-xl">
 
           <h2 className="text-xl font-bold">
             Wynik
@@ -133,15 +153,15 @@ export default function BetonPage() {
 
           {!valid ? (
 
-            <div className="flex min-h-[300px] items-center justify-center text-center">
+            <div className="flex min-h-[360px] items-center justify-center text-center">
 
               <div>
 
-                <div className="text-5xl">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-white/10 text-4xl">
                   🧱
                 </div>
 
-                <p className="mt-4 text-slate-300">
+                <p className="mt-5 text-slate-300">
                   Wprowadź wymiary,
                   <br />
                   aby obliczyć ilość betonu.
@@ -181,15 +201,10 @@ export default function BetonPage() {
               </div>
 
 
-              <div className="mt-6 border-t border-white/10 pt-5">
-
-                <p className="text-sm leading-6 text-slate-300">
-                  10% zapasu uwzględnia możliwe straty,
-                  nierówności podłoża oraz niewielkie różnice
-                  podczas wykonywania prac.
-                </p>
-
-              </div>
+              <p className="mt-5 text-sm leading-6 text-slate-400">
+                Zapas jest orientacyjny i może być różny w zależności
+                od dokładności wymiarów, podłoża oraz sposobu wykonania.
+              </p>
 
             </div>
 
@@ -200,17 +215,18 @@ export default function BetonPage() {
       </div>
 
 
-      <div className="mx-auto mt-10 max-w-5xl rounded-3xl bg-white p-7 shadow-sm">
+      <div className="mx-auto mt-10 max-w-5xl rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
         <h2 className="text-2xl font-bold">
           Jak obliczyć ilość betonu?
         </h2>
 
-        <p className="mt-4 leading-7 text-slate-600">
-          Aby obliczyć objętość betonu, należy pomnożyć
-          długość przez szerokość oraz wysokość lub grubość
-          elementu.
+        <p className="mt-4 leading-8 text-slate-600">
+          Ilość betonu oblicza się na podstawie objętości
+          konstrukcji. Należy pomnożyć długość, szerokość
+          oraz grubość elementu.
         </p>
+
 
         <div className="mt-6 rounded-2xl bg-slate-50 p-5">
 
@@ -219,10 +235,21 @@ export default function BetonPage() {
           </div>
 
           <div className="mt-3 font-mono text-sm text-slate-600">
-            długość × szerokość × wysokość = objętość betonu
+            długość × szerokość × wysokość = objętość
           </div>
 
         </div>
+
+
+        <h3 className="mt-8 text-xl font-bold">
+          Przykład
+        </h3>
+
+        <p className="mt-3 leading-8 text-slate-600">
+          Dla elementu o wymiarach 10 × 5 × 0,15 m
+          potrzebujesz 7,50 m³ betonu. Przy założeniu
+          10% zapasu będzie to około 8,25 m³.
+        </p>
 
       </div>
 

@@ -4,154 +4,38 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-const calculators = [
-  {
-    icon: "🚗",
-    name: "Kalkulator kosztu przejazdu",
-    description: "Sprawdź koszt paliwa, dystans i koszt podróży na osobę.",
-    category: "Motoryzacja",
-    keywords: "przejazd paliwo podróż samochód auto trasa km",
-    href: "/motoryzacja/koszt-przejazdu",
-  },
-  {
-    icon: "⛽",
-    name: "Kalkulator spalania",
-    description: "Oblicz rzeczywiste spalanie samochodu w l/100 km.",
-    category: "Motoryzacja",
-    keywords: "spalanie samochód auto paliwo benzyna diesel l/100",
-    href: "/motoryzacja/spalanie",
-  },
-  {
-    icon: "💰",
-    name: "Kalkulator kosztu paliwa",
-    description: "Policz, ile zapłacisz za paliwo na wybranej trasie.",
-    category: "Motoryzacja",
-    keywords: "paliwo benzyna diesel ropa cena koszt trasa",
-    href: "/motoryzacja/koszt-paliwa",
-  },
-  {
-    icon: "🚘",
-    name: "Kalkulator sprowadzenia auta",
-    description: "Oszacuj orientacyjny koszt importu samochodu.",
-    category: "Motoryzacja",
-    keywords: "samochód auto import sprowadzenie niemcy akcyza",
-    href: "/motoryzacja/sprowadzenie-auta",
-  },
-  {
-    icon: "🏗️",
-    name: "Kalkulator betonu",
-    description: "Oblicz objętość betonu potrzebnego do konstrukcji.",
-    category: "Budowa i remont",
-    keywords: "beton budowa fundament płyta posadzka m3",
-    href: "/budowa-remont/beton",
-  },
-  {
-    icon: "🧱",
-    name: "Kalkulator kostki brukowej",
-    description: "Sprawdź potrzebną ilość kostki na podjazd lub chodnik.",
-    category: "Budowa i remont",
-    keywords: "kostka brukowa podjazd taras chodnik m2",
-    href: "#",
-  },
-  {
-    icon: "🎨",
-    name: "Kalkulator farby",
-    description: "Policz ilość farby potrzebnej do malowania.",
-    category: "Budowa i remont",
-    keywords: "farba malowanie ściana sufit litry",
-    href: "#",
-  },
-  {
-    icon: "🧱",
-    name: "Kalkulator płytek",
-    description: "Oblicz liczbę płytek i zapas potrzebny do remontu.",
-    category: "Budowa i remont",
-    keywords: "płytki kafelki łazienka podłoga ściana m2",
-    href: "#",
-  },
-  {
-    icon: "💵",
-    name: "Kalkulator VAT",
-    description: "Oblicz kwoty netto, VAT i brutto.",
-    category: "Finanse",
-    keywords: "vat netto brutto podatek faktura",
-    href: "#",
-  },
-  {
-    icon: "📊",
-    name: "Kalkulator marży",
-    description: "Oblicz marżę, narzut i cenę sprzedaży.",
-    category: "Finanse",
-    keywords: "marża narzut zysk cena sprzedaż procent",
-    href: "#",
-  },
-  {
-    icon: "🏦",
-    name: "Kalkulator raty",
-    description: "Oszacuj wysokość raty na podstawie parametrów kredytu.",
-    category: "Finanse",
-    keywords: "rata kredyt pożyczka oprocentowanie",
-    href: "#",
-  },
-  {
-    icon: "⚡",
-    name: "Kalkulator zużycia prądu",
-    description: "Oblicz koszt zużycia energii elektrycznej.",
-    category: "Dom",
-    keywords: "prąd energia elektryczna kwh rachunek",
-    href: "#",
-  },
-  {
-    icon: "🔥",
-    name: "Kalkulator ogrzewania",
-    description: "Oszacuj koszt ogrzewania domu.",
-    category: "Dom",
-    keywords: "ogrzewanie dom gaz prąd ciepło",
-    href: "#",
-  },
-  {
-    icon: "📐",
-    name: "Kalkulator powierzchni",
-    description: "Policz powierzchnię pomieszczenia lub ściany.",
-    category: "Dom",
-    keywords: "powierzchnia metry kwadratowe m2 pokój ściana",
-    href: "#",
-  },
-];
+import { calculators } from "@/data/calculators";
 
 const categories = [
   {
     icon: "🚗",
     name: "Motoryzacja",
-    description: "Spalanie, paliwo, podróże i koszty samochodu.",
+    description:
+      "Spalanie, paliwo, podróże i koszty samochodu.",
     href: "/motoryzacja",
-    count: 4,
   },
   {
     icon: "🏗️",
     name: "Budowa i remont",
-    description: "Materiały, powierzchnie i ilości potrzebne na budowie.",
+    description:
+      "Materiały, powierzchnie i ilości potrzebne podczas prac.",
     href: "/budowa-remont",
-    count: 5,
   },
   {
     icon: "💰",
     name: "Finanse",
-    description: "VAT, marża, raty, procenty i codzienne finanse.",
+    description:
+      "VAT, marża, raty, procenty i codzienne obliczenia.",
     href: "#kalkulatory",
-    count: 3,
   },
   {
     icon: "🏠",
     name: "Dom",
-    description: "Prąd, ogrzewanie, powierzchnia i inne obliczenia.",
+    description:
+      "Prąd, ogrzewanie, powierzchnia i koszty domu.",
     href: "#kalkulatory",
-    count: 3,
   },
 ];
-
-const popular = calculators.slice(0, 5);
 
 export default function Home() {
   const [search, setSearch] = useState("");
@@ -163,24 +47,34 @@ export default function Home() {
       return [];
     }
 
-    return calculators.filter((calculator) =>
-      `${calculator.name} ${calculator.description} ${calculator.category} ${calculator.keywords}`
-        .toLowerCase()
-        .includes(query),
-    );
+    return calculators.filter((calculator) => {
+      const searchableText = `
+        ${calculator.name}
+        ${calculator.description}
+        ${calculator.category}
+        ${calculator.keywords}
+      `.toLowerCase();
+
+      return searchableText.includes(query);
+    });
   }, [search]);
+
+  const activePopular = calculators
+    .filter((calculator) => calculator.status === "active")
+    .slice(0, 5);
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
 
       <Header />
 
+
       {/* HERO */}
       <section className="relative overflow-hidden border-b border-slate-200 bg-white">
 
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(37,99,235,0.12),_transparent_35%),radial-gradient(circle_at_top_left,_rgba(15,23,42,0.06),_transparent_30%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(37,99,235,0.14),_transparent_35%),radial-gradient(circle_at_top_left,_rgba(15,23,42,0.06),_transparent_30%)]" />
 
-        <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-16 sm:px-6 sm:pt-20 lg:px-8 lg:pb-24">
+        <div className="relative mx-auto max-w-7xl px-5 pb-20 pt-16 sm:px-6 lg:px-8 lg:pb-24">
 
           <div className="mx-auto max-w-4xl text-center">
 
@@ -198,14 +92,15 @@ export default function Home() {
 
 
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-slate-600 sm:text-xl">
-              Kalkulatory, które pomagają szybko obliczyć koszty,
-              ilości i wartości potrzebne w codziennym życiu.
+              Kalkulatory, które pomagają szybko obliczyć
+              koszty, ilości i wartości potrzebne w codziennym życiu.
             </p>
 
 
+            {/* SEARCH */}
             <div className="mx-auto mt-9 max-w-3xl">
 
-              <div className="flex items-center rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-200/60 ring-1 ring-slate-100">
+              <div className="flex items-center rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-200/60">
 
                 <span className="px-4 text-xl">
                   🔎
@@ -222,35 +117,19 @@ export default function Home() {
 
 
                 {search && (
-
                   <button
                     type="button"
                     onClick={() => setSearch("")}
                     className="mr-2 rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-                    aria-label="Wyczyść wyszukiwanie"
                   >
                     ✕
                   </button>
-
                 )}
-
-
-                <button
-                  type="button"
-                  onClick={() => {
-                    document
-                      .getElementById("kalkulatory")
-                      ?.scrollIntoView({ behavior: "smooth" });
-                  }}
-                  className="hidden rounded-xl bg-blue-600 px-6 py-3.5 text-sm font-bold text-white transition hover:bg-blue-700 sm:block"
-                >
-                  Szukaj
-                </button>
 
               </div>
 
 
-              <div className="mt-4 flex flex-wrap justify-center gap-2 text-sm">
+              <div className="mt-4 flex flex-wrap justify-center gap-2">
 
                 {[
                   ["Spalanie", "/motoryzacja/spalanie"],
@@ -261,7 +140,7 @@ export default function Home() {
                   <Link
                     key={label}
                     href={href}
-                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 font-medium text-slate-600 transition hover:border-blue-200 hover:text-blue-600"
+                    className="rounded-full border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-600 transition hover:border-blue-200 hover:text-blue-600"
                   >
                     {label}
                   </Link>
@@ -284,7 +163,7 @@ export default function Home() {
 
         <section className="mx-auto max-w-7xl px-5 py-12 sm:px-6 lg:px-8">
 
-          <div className="mb-6">
+          <div className="mb-7">
 
             <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
               Wyszukiwanie
@@ -301,33 +180,60 @@ export default function Home() {
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
-              {results.map((calculator) => (
+              {results.map((calculator) => {
 
-                <Link
-                  key={calculator.name}
-                  href={calculator.href}
-                  className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
-                >
+                const isActive =
+                  calculator.status === "active";
 
-                  <div className="text-3xl">
-                    {calculator.icon}
+                const content = (
+                  <>
+                    <div className="text-3xl">
+                      {calculator.icon}
+                    </div>
+
+                    <h3 className="mt-4 font-bold text-slate-950">
+                      {calculator.name}
+                    </h3>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-500">
+                      {calculator.description}
+                    </p>
+
+                    <div
+                      className={
+                        isActive
+                          ? "mt-4 text-xs font-bold uppercase tracking-wider text-blue-600"
+                          : "mt-4 text-xs font-bold uppercase tracking-wider text-slate-400"
+                      }
+                    >
+                      {isActive
+                        ? calculator.category
+                        : "Wkrótce"}
+                    </div>
+                  </>
+                );
+
+                if (isActive) {
+                  return (
+                    <Link
+                      key={calculator.name}
+                      href={calculator.href}
+                      className="group rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-lg"
+                    >
+                      {content}
+                    </Link>
+                  );
+                }
+
+                return (
+                  <div
+                    key={calculator.name}
+                    className="rounded-2xl border border-slate-200 bg-white p-6 opacity-70"
+                  >
+                    {content}
                   </div>
-
-                  <h3 className="mt-4 font-bold text-slate-950 group-hover:text-blue-600">
-                    {calculator.name}
-                  </h3>
-
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    {calculator.description}
-                  </p>
-
-                  <div className="mt-4 text-xs font-bold uppercase tracking-wider text-blue-600">
-                    {calculator.category}
-                  </div>
-
-                </Link>
-
-              ))}
+                );
+              })}
 
             </div>
 
@@ -373,8 +279,7 @@ export default function Home() {
           </h2>
 
           <p className="mt-4 text-lg leading-8 text-slate-600">
-            Wszystkie narzędzia w jednym miejscu. Z czasem będziemy
-            dodawać kolejne.
+            Wszystkie narzędzia w jednym miejscu.
           </p>
 
         </div>
@@ -382,59 +287,72 @@ export default function Home() {
 
         <div className="mt-9 grid gap-5 md:grid-cols-2">
 
-          {categories.map((category) => (
+          {categories.map((category) => {
 
-            <Link
-              key={category.name}
-              href={category.href}
-              className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
-            >
+            const count = calculators.filter(
+              (calculator) =>
+                calculator.category === category.name,
+            ).length;
 
-              <div className="absolute right-0 top-0 h-28 w-28 rounded-full bg-blue-50 blur-2xl transition group-hover:bg-blue-100" />
+            const activeCount = calculators.filter(
+              (calculator) =>
+                calculator.category === category.name &&
+                calculator.status === "active",
+            ).length;
+
+            return (
+              <Link
+                key={category.name}
+                href={category.href}
+                className="group relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
+              >
+
+                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-blue-50 blur-3xl transition group-hover:bg-blue-100" />
 
 
-              <div className="relative flex items-start justify-between gap-5">
+                <div className="relative flex items-start gap-5">
 
-                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-3xl text-white">
-                  {category.icon}
+                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-slate-950 text-3xl text-white">
+                    {category.icon}
+                  </div>
+
+
+                  <div className="flex-1">
+
+                    <h3 className="text-2xl font-black text-slate-950 group-hover:text-blue-600">
+                      {category.name}
+                    </h3>
+
+                    <p className="mt-2 max-w-md leading-7 text-slate-500">
+                      {category.description}
+                    </p>
+
+                  </div>
+
+                  <div className="hidden text-2xl text-slate-300 group-hover:text-blue-600 sm:block">
+                    →
+                  </div>
+
                 </div>
 
 
-                <div className="flex-1">
+                <div className="relative mt-7 flex items-center justify-between border-t border-slate-100 pt-4 text-sm">
 
-                  <h3 className="text-2xl font-black text-slate-950 group-hover:text-blue-600">
-                    {category.name}
-                  </h3>
+                  <span className="font-semibold text-slate-500">
+                    {activeCount > 0
+                      ? `${activeCount} aktywne`
+                      : "W przygotowaniu"}
+                  </span>
 
-                  <p className="mt-2 max-w-md leading-7 text-slate-500">
-                    {category.description}
-                  </p>
+                  <span className="font-bold text-blue-600">
+                    {count} narzędzia →
+                  </span>
 
                 </div>
 
-
-                <div className="hidden text-2xl text-slate-300 transition group-hover:text-blue-600 sm:block">
-                  →
-                </div>
-
-              </div>
-
-
-              <div className="relative mt-7 flex items-center justify-between border-t border-slate-100 pt-4 text-sm">
-
-                <span className="font-semibold text-slate-500">
-                  {category.count} narzędzia
-                </span>
-
-                <span className="font-bold text-blue-600">
-                  Zobacz kategorię →
-                </span>
-
-              </div>
-
-            </Link>
-
-          ))}
+              </Link>
+            );
+          })}
 
         </div>
 
@@ -446,34 +364,22 @@ export default function Home() {
 
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
 
-          <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+          <div>
 
-            <div>
-
-              <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
-                Na start
-              </div>
-
-              <h2 className="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">
-                Najważniejsze kalkulatory
-              </h2>
-
+            <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
+              Na start
             </div>
 
-
-            <Link
-              href="#kalkulatory"
-              className="font-bold text-blue-600 hover:text-blue-700"
-            >
-              Zobacz wszystkie →
-            </Link>
+            <h2 className="mt-2 text-3xl font-black text-slate-950 sm:text-4xl">
+              Najważniejsze kalkulatory
+            </h2>
 
           </div>
 
 
           <div className="mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
 
-            {popular.map((calculator) => (
+            {activePopular.map((calculator) => (
 
               <Link
                 key={calculator.name}
@@ -531,12 +437,12 @@ export default function Home() {
               [
                 "01",
                 "Znajdź narzędzie",
-                "Wyszukaj kalkulator lub wybierz kategorię.",
+                "Wyszukaj kalkulator albo wybierz kategorię.",
               ],
               [
                 "02",
                 "Wpisz dane",
-                "Podaj kilka prostych wartości potrzebnych do obliczenia.",
+                "Podaj kilka wartości potrzebnych do obliczenia.",
               ],
               [
                 "03",

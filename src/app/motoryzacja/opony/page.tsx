@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CalculatorTracker from "@/components/CalculatorTracker";
+import FaqSchema from "@/components/FaqSchema";
 import AffiliateButton from "@/components/AffiliateButton";
 import { parseNumber } from "@/lib/number";
 
@@ -49,6 +50,34 @@ function buildCeneoUrl(
 
   return `https://www.ceneo.pl/Opony_osobowe;szukaj-opony+${search}#crid=809544&pid=31174`;
 }
+
+const faqItems = [
+  {
+    question: "Jak obliczyć różnicę między rozmiarami opon?",
+    answer:
+      "Porównaj średnicę i obwód całego koła dla obu rozmiarów. Kalkulator wykonuje te obliczenia automatycznie po wpisaniu szerokości, profilu i średnicy felgi.",
+  },
+  {
+    question: "Czy 205/55 R16 można zamienić na 225/45 R17?",
+    answer:
+      "Kalkulator pozwala sprawdzić matematyczną różnicę pomiędzy tymi rozmiarami. Nie oznacza to jednak, że taki rozmiar jest dopuszczony w każdym samochodzie.",
+  },
+  {
+    question: "Czy większa różnica średnicy wpływa na prędkościomierz?",
+    answer:
+      "Zmiana średnicy koła może zmienić zależność pomiędzy obrotem koła a prędkością jazdy. Kalkulator pokazuje matematyczne przeliczenie tego efektu.",
+  },
+  {
+    question: "Czy po porównaniu mogę sprawdzić ceny opon?",
+    answer:
+      "Tak. Po wykonaniu obliczenia możesz przejść do ofert opon w wybranym rozmiarze.",
+  },
+  {
+    question: "Czy przecinek i kropka działają tak samo?",
+    answer:
+      "Tak. Kalkulator obsługuje oba sposoby zapisu wartości dziesiętnych.",
+  },
+];
 
 export default function OponyPage() {
   const [currentWidth, setCurrentWidth] =
@@ -277,6 +306,8 @@ export default function OponyPage() {
         },
       ]}
     >
+      <FaqSchema items={faqItems} />
+
       <CalculatorTracker
         calculator="opony"
         isCalculated={calculated}

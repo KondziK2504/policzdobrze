@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CalculatorTracker from "@/components/CalculatorTracker";
+import FaqSchema from "@/components/FaqSchema";
 import { parseNumber } from "@/lib/number";
 
 function formatNumber(value: number, digits = 2) {
@@ -12,6 +13,29 @@ function formatNumber(value: number, digits = 2) {
     maximumFractionDigits: digits,
   });
 }
+
+const faqItems = [
+  {
+    question: "Jak obliczyć koszt przejazdu samochodem?",
+    answer:
+      "Pomnóż dystans przez średnie spalanie i podziel przez 100, aby otrzymać potrzebną ilość paliwa. Następnie pomnóż wynik przez cenę jednego litra.",
+  },
+  {
+    question: "Ile kosztuje przejechanie 100 km?",
+    answer:
+      "Pomnóż spalanie samochodu przez cenę jednego litra paliwa. Przykładowo 7,5 l/100 km przy cenie 6,50 zł/l daje 48,75 zł za 100 km.",
+  },
+  {
+    question: "Czy kalkulator działa dla LPG i diesla?",
+    answer:
+      "Tak. Wystarczy podać spalanie konkretnego paliwa oraz jego aktualną cenę za litr.",
+  },
+  {
+    question: "Czy mogę wpisać 6,50 zamiast 6.50?",
+    answer:
+      "Tak. Kalkulator obsługuje zarówno przecinek, jak i kropkę jako separator dziesiętny.",
+  },
+];
 
 export default function KosztPaliwaPage() {
   const [distance, setDistance] = useState("");
@@ -118,6 +142,8 @@ export default function KosztPaliwaPage() {
         },
       ]}
     >
+      <FaqSchema items={faqItems} />
+
       <CalculatorTracker
         calculator="koszt-paliwa"
         isCalculated={calculated}

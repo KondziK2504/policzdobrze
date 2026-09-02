@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CalculatorTracker from "@/components/CalculatorTracker";
+import FaqSchema from "@/components/FaqSchema";
 import { parseNumber } from "@/lib/number";
 
 function formatNumber(value: number, digits = 2) {
@@ -12,6 +13,29 @@ function formatNumber(value: number, digits = 2) {
     maximumFractionDigits: digits,
   });
 }
+
+const faqItems = [
+  {
+    question: "Czy mogę obliczyć koszt podróży tam i z powrotem?",
+    answer:
+      "Tak. Zaznacz opcję podróży w obie strony, a podany dystans zostanie automatycznie podwojony.",
+  },
+  {
+    question: "Czy można podzielić koszt paliwa na pasażerów?",
+    answer:
+      "Tak. Podaj liczbę osób, a kalkulator pokaże koszt przypadający na jedną osobę.",
+  },
+  {
+    question: "Czy kalkulator działa dla LPG?",
+    answer:
+      "Tak. Wystarczy podać spalanie LPG oraz cenę gazu za litr.",
+  },
+  {
+    question: "Czy koszt przejazdu obejmuje autostrady i parkingi?",
+    answer:
+      "Nie. Kalkulator oblicza koszt paliwa. Opłaty drogowe, parkingi i inne wydatki należy uwzględnić osobno.",
+  },
+];
 
 export default function KosztPrzejazduPage() {
   const [distance, setDistance] = useState("");
@@ -139,6 +163,8 @@ export default function KosztPrzejazduPage() {
         },
       ]}
     >
+      <FaqSchema items={faqItems} />
+
       <CalculatorTracker
         calculator="koszt-przejazdu"
         isCalculated={calculated}

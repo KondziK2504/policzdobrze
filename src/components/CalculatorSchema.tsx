@@ -9,7 +9,7 @@ type CalculatorSchemaProps = {
   categoryHref?: string;
 };
 
-const siteUrl = "https://policzdobrze.pl";
+const siteUrl = "https://www.policzdobrze.pl";
 
 export default function CalculatorSchema({
   title,
@@ -20,7 +20,10 @@ export default function CalculatorSchema({
   const [url, setUrl] = useState(siteUrl);
 
   useEffect(() => {
-    setUrl(window.location.href.split("#")[0]);
+    const pathname =
+      window.location.pathname || "/";
+
+    setUrl(`${siteUrl}${pathname}`);
   }, []);
 
   const calculatorSchema = {
@@ -40,6 +43,11 @@ export default function CalculatorSchema({
     },
   };
 
+  const categoryUrl =
+    categoryHref.startsWith("/")
+      ? `${siteUrl}${categoryHref}`
+      : siteUrl;
+
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -54,7 +62,7 @@ export default function CalculatorSchema({
         "@type": "ListItem",
         position: 2,
         name: categoryName,
-        item: `${siteUrl}${categoryHref}`,
+        item: categoryUrl,
       },
       {
         "@type": "ListItem",

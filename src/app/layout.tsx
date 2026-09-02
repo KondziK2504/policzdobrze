@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
 
-const siteUrl = "https://policzdobrze.pl";
+const siteUrl = "https://www.policzdobrze.pl";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

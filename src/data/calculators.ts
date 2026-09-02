@@ -184,9 +184,9 @@ export const calculators: Calculator[] = [
       "Oszacuj ratę, wpłatę własną, wykup i całkowity koszt leasingu samochodu.",
     category: "Finanse",
     keywords:
-      "leasing samochodu rata leasingowa auto wykup wpłata własna",
-    href: "#",
-    status: "coming-soon",
+      "leasing samochodu kalkulator raty rata leasingowa auto wykup wpłata własna finansowanie",
+    href: "/finanse/leasing",
+    status: "active",
   },
 
   {

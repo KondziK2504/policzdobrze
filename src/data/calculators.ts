@@ -63,14 +63,14 @@ export const calculators: Calculator[] = [
 
   {
     icon: "🛞",
-    name: "Kalkulator opon",
+    name: "Kalkulator opon – rozmiar i zamiennik",
     description:
-      "Porównaj dwa rozmiary opon i sprawdź różnicę średnicy, obwodu oraz wskazań prędkościomierza.",
+      "Porównaj dwa rozmiary opon i sprawdź różnicę średnicy, obwodu, wysokości boku oraz wskazań prędkościomierza.",
     category: "Motoryzacja",
     keywords:
-      "opony rozmiar opon zamiennik 205 55 r16 średnica obwód prędkościomierz",
+      "opony kalkulator opon rozmiar zamiennik 205 55 R16 225 45 R17 średnica obwód prędkościomierz",
     href: "/motoryzacja/opony",
-    status: "coming-soon",
+    status: "active",
   },
 
   {

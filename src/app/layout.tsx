@@ -13,16 +13,19 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Darmowe kalkulatory online. Oblicz koszty paliwa, spalanie samochodu, koszt podróży, sprowadzenie auta i wiele innych rzeczy.",
+    "Darmowe kalkulatory online do szybkiego obliczania kosztów, cen, spalania samochodu, VAT, leasingu, wynagrodzenia i wielu innych wartości.",
 
   keywords: [
     "kalkulator",
     "kalkulatory online",
     "darmowe kalkulatory",
-    "kalkulator paliwa",
+    "kalkulator VAT",
     "kalkulator spalania",
+    "kalkulator kosztu paliwa",
     "kalkulator kosztu przejazdu",
-    "kalkulator sprowadzenia auta",
+    "kalkulator opon",
+    "kalkulator leasingu",
+    "kalkulator wynagrodzenia",
   ],
 
   alternates: {
@@ -54,6 +57,12 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
+
+  icons: {
+    icon: "/icon.svg",
+  },
+
+  category: "utilities",
 };
 
 export default function RootLayout({

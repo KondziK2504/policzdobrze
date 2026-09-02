@@ -3,6 +3,7 @@
 import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CalculatorTracker from "@/components/CalculatorTracker";
+import AffiliateButton from "@/components/AffiliateButton";
 import { parseNumber } from "@/lib/number";
 
 function formatNumber(value: number, digits = 1) {
@@ -33,6 +34,17 @@ function calculateWheel(
     totalDiameter,
     circumference,
   };
+}
+
+function buildCeneoUrl(
+  width: number,
+  profile: number,
+  rim: number,
+) {
+  const search = `${width} ${profile} r${rim}`
+    .replace(/\s+/g, "+");
+
+  return `https://www.ceneo.pl/Opony_osobowe;szukaj-opony+${search}#crid=809544&pid=31174`;
 }
 
 export default function OponyPage() {
@@ -136,6 +148,15 @@ export default function OponyPage() {
       sidewallDifference / 2;
   }
 
+  const ceneoUrl =
+    validReplacement
+      ? buildCeneoUrl(
+          replacement.width,
+          replacement.profile,
+          replacement.rim,
+        )
+      : "#";
+
   function handleCalculate() {
     if (!valid) {
       setCalculated(false);
@@ -237,8 +258,6 @@ export default function OponyPage() {
 
       <div className="mx-auto max-w-5xl">
 
-        {/* DANE */}
-
         <div className="grid gap-8 lg:grid-cols-2">
 
           {/* OBECNA OPONA */}
@@ -262,7 +281,6 @@ export default function OponyPage() {
               </div>
 
             </div>
-
 
             <div className="mt-7 grid gap-4 sm:grid-cols-3">
 
@@ -290,9 +308,7 @@ export default function OponyPage() {
                   </span>
 
                 </div>
-
               </div>
-
 
               <div>
                 <label className="mb-2 block text-sm font-semibold">
@@ -318,9 +334,7 @@ export default function OponyPage() {
                   </span>
 
                 </div>
-
               </div>
-
 
               <div>
                 <label className="mb-2 block text-sm font-semibold">
@@ -346,11 +360,9 @@ export default function OponyPage() {
                   </span>
 
                 </div>
-
               </div>
 
             </div>
-
 
             <div className="mt-5 rounded-2xl bg-slate-50 p-4 text-center">
 
@@ -359,9 +371,7 @@ export default function OponyPage() {
               </div>
 
               <div className="mt-1 text-2xl font-black">
-                {current.width > 0 &&
-                current.profile > 0 &&
-                current.rim > 0
+                {validCurrent
                   ? `${current.width}/${current.profile} R${current.rim}`
                   : "—"}
               </div>
@@ -393,7 +403,6 @@ export default function OponyPage() {
 
             </div>
 
-
             <div className="mt-7 grid gap-4 sm:grid-cols-3">
 
               <div>
@@ -420,9 +429,7 @@ export default function OponyPage() {
                   </span>
 
                 </div>
-
               </div>
-
 
               <div>
                 <label className="mb-2 block text-sm font-semibold">
@@ -448,9 +455,7 @@ export default function OponyPage() {
                   </span>
 
                 </div>
-
               </div>
-
 
               <div>
                 <label className="mb-2 block text-sm font-semibold">
@@ -476,11 +481,9 @@ export default function OponyPage() {
                   </span>
 
                 </div>
-
               </div>
 
             </div>
-
 
             <div className="mt-5 rounded-2xl bg-blue-50 p-4 text-center">
 
@@ -489,9 +492,7 @@ export default function OponyPage() {
               </div>
 
               <div className="mt-1 text-2xl font-black text-blue-700">
-                {replacement.width > 0 &&
-                replacement.profile > 0 &&
-                replacement.rim > 0
+                {validReplacement
                   ? `${replacement.width}/${replacement.profile} R${replacement.rim}`
                   : "—"}
               </div>
@@ -507,20 +508,15 @@ export default function OponyPage() {
 
         <div className="mt-8 rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
-          <div className="max-w-2xl">
+          <h2 className="text-xl font-bold">
+            Wskazanie prędkościomierza
+          </h2>
 
-            <h2 className="text-xl font-bold">
-              Wskazanie prędkościomierza
-            </h2>
-
-            <p className="mt-2 text-sm leading-6 text-slate-500">
-              Opcjonalnie podaj prędkość widoczną na liczniku,
-              aby sprawdzić orientacyjną rzeczywistą prędkość
-              po zmianie rozmiaru koła.
-            </p>
-
-          </div>
-
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+            Opcjonalnie podaj prędkość widoczną na liczniku,
+            aby sprawdzić orientacyjną rzeczywistą prędkość
+            po zmianie rozmiaru koła.
+          </p>
 
           <div className="mt-6 max-w-sm">
 
@@ -558,7 +554,6 @@ export default function OponyPage() {
               Porównaj rozmiary
             </button>
 
-
             <button
               type="button"
               onClick={handleExample}
@@ -566,7 +561,6 @@ export default function OponyPage() {
             >
               Wypełnij przykładem
             </button>
-
 
             <button
               type="button"
@@ -626,8 +620,6 @@ export default function OponyPage() {
 
             <div className="mt-7">
 
-              {/* GŁÓWNY WYNIK */}
-
               <div
                 className={
                   Math.abs(diameterDifferencePercent) <= 3
@@ -663,8 +655,6 @@ export default function OponyPage() {
 
               </div>
 
-
-              {/* PARAMETRY */}
 
               <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
 
@@ -734,14 +724,11 @@ export default function OponyPage() {
               </div>
 
 
-              {/* SZCZEGÓŁOWE RÓŻNICE */}
-
               <div className="mt-4 rounded-2xl bg-white/10 p-5">
 
                 <div className="text-sm font-semibold text-white">
                   Szczegóły zmiany
                 </div>
-
 
                 <div className="mt-3 divide-y divide-white/10">
 
@@ -813,8 +800,6 @@ export default function OponyPage() {
               </div>
 
 
-              {/* PRĘDKOŚĆ */}
-
               {speed > 0 && (
 
                 <div className="mt-4 rounded-2xl bg-blue-500/10 p-5">
@@ -838,7 +823,52 @@ export default function OponyPage() {
               )}
 
 
-              {/* KOPIOWANIE */}
+              {/* CENEO */}
+
+              <div className="mt-6 rounded-2xl border border-blue-400/20 bg-blue-400/5 p-5">
+
+                <div className="flex items-start gap-3">
+
+                  <div className="text-2xl">
+                    🛞
+                  </div>
+
+                  <div className="flex-1">
+
+                    <div className="font-bold">
+                      Szukasz opon w rozmiarze{" "}
+                      {replacement.width}/{replacement.profile} R
+                      {replacement.rim}?
+                    </div>
+
+                    <p className="mt-2 text-sm leading-6 text-slate-400">
+                      Sprawdź dostępne oferty i porównaj ceny opon
+                      w tym rozmiarze.
+                    </p>
+
+                  </div>
+
+                </div>
+
+
+                <div className="mt-4">
+
+                  <AffiliateButton
+                    calculator="opony"
+                    partner="ceneo"
+                    href={ceneoUrl}
+                  >
+                    Sprawdź ceny opon
+                  </AffiliateButton>
+
+                </div>
+
+                <p className="mt-3 text-center text-xs text-slate-500">
+                  Link partnerski Ceneo.
+                </p>
+
+              </div>
+
 
               <button
                 type="button"
@@ -851,8 +881,6 @@ export default function OponyPage() {
               </button>
 
 
-              {/* OSTRZEŻENIE */}
-
               <div className="mt-5 rounded-2xl border border-amber-400/20 bg-amber-400/5 p-5">
 
                 <div className="font-semibold text-amber-200">
@@ -860,11 +888,12 @@ export default function OponyPage() {
                 </div>
 
                 <p className="mt-2 text-sm leading-6 text-slate-400">
-                  Kalkulator porównuje wyłącznie parametry geometryczne
-                  rozmiarów opon. Nie potwierdza, że dany rozmiar jest
-                  dopuszczony do konkretnego samochodu. Przed zmianą
-                  rozmiaru sprawdź zalecenia producenta pojazdu, felgi
-                  i opony oraz wymagania dotyczące homologacji.
+                  Kalkulator porównuje parametry geometryczne
+                  rozmiarów opon. Nie potwierdza, że dany rozmiar
+                  jest dopuszczony do konkretnego samochodu.
+                  Przed zmianą rozmiaru sprawdź zalecenia producenta
+                  pojazdu, felgi i opony oraz wymagania dotyczące
+                  homologacji.
                 </p>
 
               </div>
@@ -881,48 +910,45 @@ export default function OponyPage() {
         <div className="mt-10 rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
           <h2 className="text-2xl font-bold">
-            Jak czytać rozmiar opony?
+            Kalkulator rozmiaru opon
           </h2>
 
           <p className="mt-4 leading-8 text-slate-600">
-            W oznaczeniu takim jak 205/55 R16 liczba 205 oznacza
-            szerokość opony w milimetrach, 55 oznacza profil wyrażony
-            jako procent szerokości, a 16 oznacza średnicę felgi
-            w calach.
+            Wpisz obecny i nowy rozmiar opony, aby porównać
+            średnicę całego koła, jego obwód, wysokość boku
+            oraz szerokość. Kalkulator pozwala również sprawdzić,
+            jak zmiana średnicy może wpłynąć matematycznie na
+            wskazanie prędkościomierza.
           </p>
 
 
-          <div className="mt-6 rounded-2xl bg-slate-50 p-5 font-mono text-sm text-slate-600">
+          <h3 className="mt-8 text-xl font-bold">
+            Jak czytać rozmiar 205/55 R16?
+          </h3>
 
-            średnica koła =
+          <p className="mt-3 leading-8 text-slate-600">
+            Liczba 205 oznacza szerokość opony w milimetrach,
+            55 to wysokość boku wyrażona jako procent szerokości,
+            a 16 oznacza średnicę felgi w calach.
+          </p>
+
+
+          <div className="mt-6 rounded-2xl bg-slate-50 p-5 font-mono text-sm leading-7 text-slate-600">
+            wysokość boku = szerokość × profil ÷ 100
             <br />
-            średnica felgi + 2 × wysokość boku
-
+            średnica koła = średnica felgi + 2 × wysokość boku
           </div>
 
 
           <h3 className="mt-8 text-xl font-bold">
-            Co daje porównanie rozmiarów?
+            Czy wynik potwierdza, że nowy rozmiar pasuje do samochodu?
           </h3>
 
           <p className="mt-3 leading-8 text-slate-600">
-            Kalkulator pokazuje, jak zmienia się średnica całego
-            koła, jego obwód, wysokość boku oraz szerokość opony.
-            Pozwala również oszacować matematyczną zmianę wskazania
-            prędkościomierza wynikającą ze zmiany średnicy koła.
-          </p>
-
-
-          <h3 className="mt-8 text-xl font-bold">
-            Czy większa opona zawsze pasuje?
-          </h3>
-
-          <p className="mt-3 leading-8 text-slate-600">
-            Nie. Zgodność średnicy nie wystarcza do potwierdzenia,
-            że konkretny rozmiar może być zastosowany w danym aucie.
-            Trzeba uwzględnić między innymi szerokość felgi,
-            nośność, indeks prędkości, miejsce w nadkolu oraz
-            dopuszczone przez producenta rozmiary.
+            Nie. Kalkulator pokazuje matematyczne różnice pomiędzy
+            rozmiarami. Ostateczny dobór zależy również od samochodu,
+            felgi, nośności, indeksu prędkości, miejsca w nadkolu
+            oraz dopuszczonych przez producenta rozmiarów.
           </p>
 
 
@@ -938,32 +964,20 @@ export default function OponyPage() {
               </h4>
 
               <p className="mt-2 leading-7 text-slate-600">
-                Tak. Możesz wpisać zarówno 225,5, jak i 225.5.
+                Tak. Możesz wpisywać wartości z przecinkiem
+                albo kropką.
               </p>
             </div>
 
 
             <div>
               <h4 className="font-semibold">
-                Jak obliczana jest średnica koła?
+                Czy można sprawdzić ceny opon po obliczeniu?
               </h4>
 
               <p className="mt-2 leading-7 text-slate-600">
-                Do średnicy felgi przeliczonej z cali na milimetry
-                dodajemy dwukrotność wysokości boku opony.
-              </p>
-            </div>
-
-
-            <div>
-              <h4 className="font-semibold">
-                Czy wynik mówi, że opona jest bezpieczna dla mojego auta?
-              </h4>
-
-              <p className="mt-2 leading-7 text-slate-600">
-                Nie. Wynik pokazuje różnice geometryczne między
-                rozmiarami. Ostateczny dobór należy sprawdzić dla
-                konkretnego samochodu i felgi.
+                Tak. Po wykonaniu porównania możesz przejść
+                do ofert opon w wybranym rozmiarze.
               </p>
             </div>
 

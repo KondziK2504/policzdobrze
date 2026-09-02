@@ -1,16 +1,18 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import { parseNumber } from "@/lib/number";
 
 export default function SpalaniePage() {
   const [distance, setDistance] = useState("");
   const [fuel, setFuel] = useState("");
   const [fuelPrice, setFuelPrice] = useState("");
 
-  const km = Number(distance);
-  const liters = Number(fuel);
-  const price = Number(fuelPrice);
+  const km = parseNumber(distance);
+  const liters = parseNumber(fuel);
+  const price = parseNumber(fuelPrice);
 
   const hasBasicData = km > 0 && liters > 0;
 
@@ -59,26 +61,14 @@ export default function SpalaniePage() {
         {/* FORMULARZ */}
         <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
-          <div className="flex items-start justify-between gap-4">
+          <h2 className="text-xl font-bold">
+            Wprowadź dane
+          </h2>
 
-            <div>
-
-              <h2 className="text-xl font-bold">
-                Wprowadź dane
-              </h2>
-
-              <p className="mt-2 text-sm leading-6 text-slate-500">
-                Najdokładniejszy wynik uzyskasz na podstawie
-                rzeczywistego tankowania do pełna.
-              </p>
-
-            </div>
-
-            <div className="rounded-xl bg-blue-50 px-3 py-2 text-sm font-semibold text-blue-700">
-              3 pola
-            </div>
-
-          </div>
+          <p className="mt-2 text-sm leading-6 text-slate-500">
+            Możesz używać przecinka lub kropki jako separatora
+            dziesiętnego.
+          </p>
 
 
           <div className="mt-7 space-y-5">
@@ -92,9 +82,8 @@ export default function SpalaniePage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.1"
+                  type="text"
+                  inputMode="decimal"
                   value={distance}
                   onChange={(e) => setDistance(e.target.value)}
                   placeholder="np. 520"
@@ -119,9 +108,8 @@ export default function SpalaniePage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={fuel}
                   onChange={(e) => setFuel(e.target.value)}
                   placeholder="np. 42"
@@ -149,12 +137,11 @@ export default function SpalaniePage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={fuelPrice}
                   onChange={(e) => setFuelPrice(e.target.value)}
-                  placeholder="np. 6.50"
+                  placeholder="np. 6,50"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
@@ -172,14 +159,12 @@ export default function SpalaniePage() {
           <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50 p-5">
 
             <div className="font-semibold text-blue-900">
-              💡 Jak uzyskać dokładny wynik?
+              💡 Wpisuj 7,5 albo 7.5
             </div>
 
             <p className="mt-2 text-sm leading-6 text-blue-800">
-              Zatankuj samochód do pełna, wyzeruj licznik kilometrów,
-              przejedź określony dystans i ponownie zatankuj do pełna.
-              Ilość zatankowanego paliwa będzie przybliżeniem
-              rzeczywistego zużycia.
+              PoliczDobrze automatycznie rozpoznaje zarówno przecinek,
+              jak i kropkę jako separator dziesiętny.
             </p>
 
           </div>
@@ -320,7 +305,7 @@ export default function SpalaniePage() {
       </div>
 
 
-      {/* TREŚĆ SEO */}
+      {/* SEO */}
       <div className="mx-auto mt-10 max-w-5xl rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
         <h2 className="text-2xl font-bold">
@@ -328,12 +313,10 @@ export default function SpalaniePage() {
         </h2>
 
         <p className="mt-4 leading-8 text-slate-600">
-          Średnie spalanie samochodu określa ilość paliwa,
-          którą pojazd zużywa na przejechanie 100 kilometrów.
-          Do podstawowego obliczenia potrzebujesz znać liczbę
-          przejechanych kilometrów oraz ilość zużytego paliwa.
+          Aby obliczyć średnie spalanie samochodu, podziel ilość
+          zużytego paliwa przez przejechany dystans i pomnóż wynik
+          przez 100.
         </p>
-
 
         <div className="mt-6 rounded-2xl bg-slate-50 p-5">
 
@@ -342,7 +325,7 @@ export default function SpalaniePage() {
           </div>
 
           <div className="mt-3 font-mono text-sm text-slate-600">
-            spalanie = ilość paliwa ÷ dystans × 100
+            spalanie = paliwo ÷ dystans × 100
           </div>
 
         </div>
@@ -353,22 +336,8 @@ export default function SpalaniePage() {
         </h3>
 
         <p className="mt-3 leading-8 text-slate-600">
-          Jeżeli samochód przejechał 520 km i zużył 42 litry
-          paliwa, jego średnie spalanie wynosi około
-          8,08 l/100 km.
-        </p>
-
-
-        <h3 className="mt-8 text-xl font-bold">
-          Jak sprawdzić spalanie w praktyce?
-        </h3>
-
-        <p className="mt-3 leading-8 text-slate-600">
-          Najlepiej zatankować samochód do pełna, wyzerować
-          licznik dziennego przebiegu i przejechać określony
-          dystans. Przy kolejnym tankowaniu do pełna ilość
-          zatankowanego paliwa pozwoli obliczyć rzeczywiste
-          średnie spalanie.
+          Jeśli samochód przejechał 520 km i zużył 42 litry paliwa,
+          spalanie wynosi około 8,08 l/100 km.
         </p>
 
 
@@ -381,27 +350,25 @@ export default function SpalaniePage() {
           <div>
 
             <h4 className="font-semibold">
-              Czy kalkulator działa dla benzyny i diesla?
+              Czy mogę wpisać przecinek zamiast kropki?
             </h4>
 
             <p className="mt-2 leading-7 text-slate-600">
-              Tak. Wzór na średnie spalanie jest taki sam
-              niezależnie od rodzaju paliwa.
+              Tak. Kalkulator rozpoznaje zarówno zapis 7,5,
+              jak i 7.5.
             </p>
 
           </div>
 
-
           <div>
 
             <h4 className="font-semibold">
-              Czy cena paliwa jest potrzebna?
+              Czy cena paliwa jest obowiązkowa?
             </h4>
 
             <p className="mt-2 leading-7 text-slate-600">
-              Nie. Do wyliczenia samego spalania wystarczy
-              dystans i ilość zużytego paliwa. Cena jest potrzebna
-              tylko do wyliczenia kosztu paliwa.
+              Nie. Cena paliwa jest potrzebna tylko wtedy,
+              gdy chcesz obliczyć koszt przejazdu.
             </p>
 
           </div>

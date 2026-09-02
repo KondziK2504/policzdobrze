@@ -9,6 +9,7 @@ export type Calculator = {
 };
 
 export const calculators: Calculator[] = [
+
   // =========================
   // MOTORYZACJA
   // =========================
@@ -106,60 +107,60 @@ export const calculators: Calculator[] = [
     icon: "🧱",
     name: "Kalkulator kostki brukowej",
     description:
-      "Oblicz ilość kostki potrzebnej na podjazd, chodnik lub taras.",
+      "Oblicz powierzchnię oraz orientacyjną liczbę kostek potrzebnych na podjazd lub chodnik.",
     category: "Budowa i remont",
     keywords:
       "kostka brukowa podjazd chodnik taras m2 bruk",
-    href: "#",
-    status: "coming-soon",
+    href: "/budowa-remont/kostka-brukowa",
+    status: "active",
   },
 
   {
     icon: "🎨",
     name: "Kalkulator farby",
     description:
-      "Oblicz ilość farby potrzebnej do pomalowania ścian i sufitów.",
+      "Oblicz ilość farby potrzebnej do pomalowania ścian.",
     category: "Budowa i remont",
     keywords:
       "farba malowanie ściana sufit litry remont",
-    href: "#",
-    status: "coming-soon",
+    href: "/budowa-remont/farba",
+    status: "active",
   },
 
   {
     icon: "🧱",
     name: "Kalkulator płytek",
     description:
-      "Oblicz liczbę płytek potrzebnych do wykończenia powierzchni.",
+      "Oblicz liczbę płytek oraz zapas potrzebny do remontu.",
     category: "Budowa i remont",
     keywords:
       "płytki kafelki łazienka podłoga ściana m2 remont",
-    href: "#",
-    status: "coming-soon",
+    href: "/budowa-remont/plytki",
+    status: "active",
   },
 
   {
     icon: "🪨",
     name: "Kalkulator piasku i żwiru",
     description:
-      "Oszacuj potrzebną ilość piasku lub żwiru.",
+      "Oblicz orientacyjną objętość i masę potrzebnego kruszywa.",
     category: "Budowa i remont",
     keywords:
       "piasek żwir kruszywo budowa tona m3",
-    href: "#",
-    status: "coming-soon",
+    href: "/budowa-remont/piasek-i-zwir",
+    status: "active",
   },
 
   {
     icon: "🧱",
     name: "Kalkulator cementu",
     description:
-      "Oszacuj ilość cementu potrzebnego do prac budowlanych.",
+      "Oszacuj ilość cementu oraz liczbę potrzebnych worków.",
     category: "Budowa i remont",
     keywords:
-      "cement beton zaprawa budowa worki",
-    href: "#",
-    status: "coming-soon",
+      "cement beton zaprawa budowa worki kg",
+    href: "/budowa-remont/cement",
+    status: "active",
   },
 
 

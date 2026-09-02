@@ -4,7 +4,7 @@ import { calculators } from "@/data/calculators";
 export const metadata = {
   title: "Kalkulatory budowlane i remontowe",
   description:
-    "Darmowe kalkulatory budowlane i remontowe. Oblicz beton, kostkę brukową, farbę, płytki oraz inne materiały.",
+    "Darmowe kalkulatory budowlane i remontowe. Oblicz beton, kostkę brukową, farbę, płytki, piasek, żwir i cement.",
 };
 
 export default function BudowaRemontPage() {
@@ -13,18 +13,28 @@ export default function BudowaRemontPage() {
       calculator.category === "Budowa i remont",
   );
 
+  const activeCalculators = categoryCalculators.filter(
+    (calculator) => calculator.status === "active",
+  );
+
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
 
-      <header className="border-b border-slate-200 bg-white">
+      <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
 
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
 
           <Link
             href="/"
-            className="text-xl font-extrabold tracking-tight"
+            className="flex items-center gap-3"
           >
-            POLICZ<span className="text-blue-600">DOBRZE</span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-lg font-black text-white">
+              P
+            </span>
+
+            <span className="text-xl font-extrabold tracking-tight">
+              Policz<span className="text-blue-600">Dobrze</span>
+            </span>
           </Link>
 
           <Link
@@ -67,25 +77,37 @@ export default function BudowaRemontPage() {
 
       <section className="mx-auto max-w-7xl px-5 py-14 sm:px-6 lg:px-8">
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="mb-8">
+
+          <div className="text-sm font-bold uppercase tracking-wider text-blue-600">
+            {activeCalculators.length} dostępnych narzędzi
+          </div>
+
+          <h2 className="mt-2 text-3xl font-black">
+            Wybierz kalkulator
+          </h2>
+
+        </div>
+
+
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
           {categoryCalculators.map((calculator) => {
 
             const active = calculator.status === "active";
 
-            if (active) {
+            if (!active) {
               return (
-                <Link
+                <div
                   key={calculator.name}
-                  href={calculator.href}
-                  className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
+                  className="rounded-3xl border border-slate-200 bg-white p-7 opacity-70"
                 >
 
                   <div className="text-4xl">
                     {calculator.icon}
                   </div>
 
-                  <h2 className="mt-5 text-2xl font-black group-hover:text-blue-600">
+                  <h2 className="mt-5 text-xl font-black">
                     {calculator.name}
                   </h2>
 
@@ -93,25 +115,27 @@ export default function BudowaRemontPage() {
                     {calculator.description}
                   </p>
 
-                  <div className="mt-6 font-bold text-blue-600">
-                    Otwórz kalkulator →
+                  <div className="mt-5 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate-500">
+                    Wkrótce
                   </div>
 
-                </Link>
+                </div>
               );
             }
 
+
             return (
-              <div
+              <Link
                 key={calculator.name}
-                className="rounded-3xl border border-slate-200 bg-white p-7 opacity-75"
+                href={calculator.href}
+                className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
               >
 
                 <div className="text-4xl">
                   {calculator.icon}
                 </div>
 
-                <h2 className="mt-5 text-2xl font-black">
+                <h2 className="mt-5 text-xl font-black group-hover:text-blue-600">
                   {calculator.name}
                 </h2>
 
@@ -119,11 +143,11 @@ export default function BudowaRemontPage() {
                   {calculator.description}
                 </p>
 
-                <div className="mt-6 inline-flex rounded-full bg-slate-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-slate-500">
-                  Wkrótce
+                <div className="mt-6 font-bold text-blue-600">
+                  Otwórz kalkulator →
                 </div>
 
-              </div>
+              </Link>
             );
           })}
 
@@ -142,14 +166,16 @@ export default function BudowaRemontPage() {
 
           <p className="mt-5 leading-8 text-slate-600">
             Podczas budowy lub remontu odpowiednie obliczenie
-            ilości materiałów pomaga ograniczyć niepotrzebne
-            zakupy i ułatwia zaplanowanie prac.
+            ilości materiałów pomaga lepiej zaplanować zakupy.
+            Kalkulatory na PoliczDobrze pozwalają szybko oszacować
+            potrzebną ilość betonu, kostki, farby, płytek, kruszyw
+            i cementu.
           </p>
 
           <p className="mt-5 leading-8 text-slate-600">
-            Na PoliczDobrze będziemy stopniowo dodawać kolejne
-            narzędzia dotyczące betonu, kostki brukowej, farby,
-            płytek, kruszyw i innych materiałów.
+            Wyniki mają charakter orientacyjny. Rzeczywiste
+            zużycie może zależeć od rodzaju materiału, podłoża,
+            sposobu wykonania oraz strat podczas prac.
           </p>
 
         </div>

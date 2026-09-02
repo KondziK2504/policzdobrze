@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "new-calculator": "node scripts/new-calculator.mjs"
   },
   "dependencies": {
     "@tailwindcss/postcss": "^4.3.3",

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CalculatorSchema from "@/components/CalculatorSchema";
 import { ReactNode } from "react";
 
 type RelatedCalculator = {
@@ -30,6 +31,13 @@ export default function CalculatorLayout({
 }: CalculatorLayoutProps) {
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
+
+      <CalculatorSchema
+        title={title}
+        description={description}
+        categoryName={categoryName}
+        categoryHref={categoryHref}
+      />
 
       <Header />
 
@@ -179,7 +187,6 @@ export default function CalculatorLayout({
         </section>
 
       )}
-
 
       <Footer />
 

@@ -15,22 +15,15 @@ export const metadata: Metadata = {
   description:
     "Darmowe kalkulatory online do szybkiego obliczania kosztów, cen, spalania samochodu, VAT, leasingu, wynagrodzenia i wielu innych wartości.",
 
-  keywords: [
-    "kalkulator",
-    "kalkulatory online",
-    "darmowe kalkulatory",
-    "kalkulator VAT",
-    "kalkulator spalania",
-    "kalkulator kosztu paliwa",
-    "kalkulator kosztu przejazdu",
-    "kalkulator opon",
-    "kalkulator leasingu",
-    "kalkulator wynagrodzenia",
+  authors: [
+    {
+      name: "PoliczDobrze.pl",
+      url: siteUrl,
+    },
   ],
 
-  alternates: {
-    canonical: siteUrl,
-  },
+  creator: "PoliczDobrze.pl",
+  publisher: "PoliczDobrze.pl",
 
   openGraph: {
     title: "PoliczDobrze.pl – Darmowe kalkulatory online",
@@ -55,6 +48,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
     },
   },
 

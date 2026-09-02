@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { calculators } from "@/data/calculators";
 
-export const metadata = {
+const siteUrl = "https://policzdobrze.pl";
+
+export const metadata: Metadata = {
   title: "Kalkulatory budowlane i remontowe – beton, płytki, farba",
   description:
     "Darmowe kalkulatory budowlane i remontowe. Oblicz ilość betonu, cementu, farby, płytek, kostki brukowej, piasku i żwiru.",
+
+  alternates: {
+    canonical: `${siteUrl}/budowa-remont`,
+  },
+
+  openGraph: {
+    title: "Kalkulatory budowlane i remontowe – beton, płytki, farba",
+    description:
+      "Darmowe kalkulatory do obliczania ilości betonu, cementu, farby, płytek, kostki brukowej, piasku i żwiru.",
+    url: `${siteUrl}/budowa-remont`,
+    siteName: "PoliczDobrze.pl",
+    locale: "pl_PL",
+    type: "website",
+  },
 };
 
 export default function BudowaRemontPage() {
@@ -29,6 +46,7 @@ export default function BudowaRemontPage() {
             href="/"
             className="flex items-center gap-3"
           >
+
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-lg font-black text-white">
               P
             </span>
@@ -36,7 +54,9 @@ export default function BudowaRemontPage() {
             <span className="text-xl font-extrabold tracking-tight">
               Policz<span className="text-blue-600">Dobrze</span>
             </span>
+
           </Link>
+
 
           <Link
             href="/"

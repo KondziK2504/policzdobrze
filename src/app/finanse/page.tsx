@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { calculators } from "@/data/calculators";
 
-export const metadata = {
+const siteUrl = "https://policzdobrze.pl";
+
+export const metadata: Metadata = {
   title: "Kalkulatory finansowe – VAT, leasing, wynagrodzenie",
   description:
     "Darmowe kalkulatory finansowe. Oblicz VAT netto i brutto, ratę leasingu samochodu oraz wynagrodzenie brutto i netto.",
+
+  alternates: {
+    canonical: `${siteUrl}/finanse`,
+  },
+
+  openGraph: {
+    title: "Kalkulatory finansowe – VAT, leasing, wynagrodzenie",
+    description:
+      "Darmowe kalkulatory finansowe do obliczania VAT, leasingu i wynagrodzenia.",
+    url: `${siteUrl}/finanse`,
+    siteName: "PoliczDobrze.pl",
+    locale: "pl_PL",
+    type: "website",
+  },
 };
 
 export default function FinansePage() {

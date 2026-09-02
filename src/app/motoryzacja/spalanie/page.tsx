@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import CalculatorTracker from "@/components/CalculatorTracker";
+import FaqSchema from "@/components/FaqSchema";
 import { parseNumber } from "@/lib/number";
 
 type CalculationMode = "consumption" | "fuel";
@@ -24,8 +25,11 @@ export default function SpalaniePage() {
   const [consumption, setConsumption] = useState("");
   const [fuelPrice, setFuelPrice] = useState("");
 
-  const [calculated, setCalculated] = useState(false);
-  const [copied, setCopied] = useState(false);
+  const [calculated, setCalculated] =
+    useState(false);
+
+  const [copied, setCopied] =
+    useState(false);
 
   const km = parseNumber(distance);
   const liters = parseNumber(fuelUsed);
@@ -33,10 +37,12 @@ export default function SpalaniePage() {
   const price = parseNumber(fuelPrice);
 
   const validConsumptionMode =
-    km > 0 && liters > 0;
+    km > 0 &&
+    liters > 0;
 
   const validFuelMode =
-    km > 0 && lPer100 > 0;
+    km > 0 &&
+    lPer100 > 0;
 
   const valid =
     mode === "consumption"
@@ -44,30 +50,38 @@ export default function SpalaniePage() {
       : validFuelMode;
 
   const calculatedConsumption =
-    mode === "consumption" && validConsumptionMode
+    mode === "consumption" &&
+    validConsumptionMode
       ? (liters / km) * 100
-      : mode === "fuel" && validFuelMode
+      : mode === "fuel" &&
+          validFuelMode
         ? lPer100
         : 0;
 
   const calculatedFuel =
-    mode === "consumption" && validConsumptionMode
+    mode === "consumption" &&
+    validConsumptionMode
       ? liters
-      : mode === "fuel" && validFuelMode
+      : mode === "fuel" &&
+          validFuelMode
         ? (km * lPer100) / 100
         : 0;
 
   const costPer100 =
-    price > 0 && calculatedConsumption > 0
+    price > 0 &&
+    calculatedConsumption > 0
       ? calculatedConsumption * price
       : 0;
 
   const totalCost =
-    price > 0 && calculatedFuel > 0
+    price > 0 &&
+    calculatedFuel > 0
       ? calculatedFuel * price
       : 0;
 
-  function handleModeChange(nextMode: CalculationMode) {
+  function handleModeChange(
+    nextMode: CalculationMode,
+  ) {
     setMode(nextMode);
     setCalculated(false);
     setCopied(false);
@@ -135,6 +149,39 @@ export default function SpalaniePage() {
     }
   }
 
+  const faqItems = [
+    {
+      question:
+        "Jak najdokładniej sprawdzić spalanie samochodu?",
+      answer:
+        "Najlepiej zatankować samochód, wyzerować licznik przebiegu, przejechać określony dystans, a następnie ponownie zatankować. Ilość dolanego paliwa i przejechany dystans pozwalają obliczyć rzeczywiste spalanie.",
+    },
+    {
+      question:
+        "Czy kalkulator działa dla LPG?",
+      answer:
+        "Tak. W przypadku LPG podaj ilość zużytego gazu lub średnie spalanie LPG oraz cenę gazu za litr.",
+    },
+    {
+      question:
+        "Ile kosztuje przejechanie 100 km?",
+      answer:
+        "Zależy to od spalania samochodu oraz ceny paliwa. Koszt 100 km otrzymasz, mnożąc średnie spalanie przez cenę jednego litra paliwa.",
+    },
+    {
+      question:
+        "Czy komputer pokładowy pokazuje dokładne spalanie?",
+      answer:
+        "Wskazanie komputera może różnić się od rzeczywistego zużycia paliwa. Dokładniejszy wynik uzyskasz na podstawie ilości zatankowanego paliwa i rzeczywistego dystansu.",
+    },
+    {
+      question:
+        "Czy można wpisać przecinek zamiast kropki?",
+      answer:
+        "Tak. Kalkulator obsługuje oba sposoby zapisu liczb, np. 7,5 oraz 7.5.",
+    },
+  ];
+
   return (
     <CalculatorLayout
       icon="⛽"
@@ -160,6 +207,8 @@ export default function SpalaniePage() {
         },
       ]}
     >
+      <FaqSchema items={faqItems} />
+
       <CalculatorTracker
         calculator="spalanie"
         isCalculated={calculated}
@@ -197,6 +246,7 @@ export default function SpalaniePage() {
             <h2 className="text-xl font-bold">
               Dane przejazdu
             </h2>
+
 
             {/* TRYB */}
 
@@ -411,6 +461,8 @@ export default function SpalaniePage() {
             </div>
 
 
+            {/* PRZYCISKI */}
+
             <div className="mt-7 grid gap-3 sm:grid-cols-3">
 
               <button
@@ -586,21 +638,30 @@ export default function SpalaniePage() {
                   {mode === "consumption" ? (
 
                     <div className="mt-3 font-mono text-sm leading-7 text-slate-300">
+
                       {formatNumber(liters)} ÷{" "}
                       {formatNumber(km, 1)} × 100 ={" "}
+
                       <strong className="text-white">
-                        {formatNumber(calculatedConsumption)} l/100 km
+                        {formatNumber(
+                          calculatedConsumption,
+                        )}{" "}
+                        l/100 km
                       </strong>
+
                     </div>
 
                   ) : (
 
                     <div className="mt-3 font-mono text-sm leading-7 text-slate-300">
+
                       {formatNumber(km, 1)} ×{" "}
                       {formatNumber(lPer100)} ÷ 100 ={" "}
+
                       <strong className="text-white">
                         {formatNumber(calculatedFuel)} l
                       </strong>
+
                     </div>
 
                   )}

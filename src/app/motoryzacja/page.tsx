@@ -1,10 +1,27 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { calculators } from "@/data/calculators";
 
-export const metadata = {
+const siteUrl = "https://policzdobrze.pl";
+
+export const metadata: Metadata = {
   title: "Kalkulatory motoryzacyjne – spalanie, paliwo, opony",
   description:
     "Darmowe kalkulatory motoryzacyjne. Oblicz spalanie samochodu, koszt paliwa i przejazdu, porównaj rozmiary opon oraz sprawdź koszt sprowadzenia auta.",
+
+  alternates: {
+    canonical: `${siteUrl}/motoryzacja`,
+  },
+
+  openGraph: {
+    title: "Kalkulatory motoryzacyjne – spalanie, paliwo, opony",
+    description:
+      "Darmowe kalkulatory do obliczania spalania, kosztu paliwa, przejazdu, rozmiaru opon i sprowadzenia auta.",
+    url: `${siteUrl}/motoryzacja`,
+    siteName: "PoliczDobrze.pl",
+    locale: "pl_PL",
+    type: "website",
+  },
 };
 
 export default function MotoryzacjaPage() {
@@ -32,6 +49,7 @@ export default function MotoryzacjaPage() {
             href="/"
             className="flex items-center gap-3"
           >
+
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-950 text-lg font-black text-white">
               P
             </span>
@@ -39,6 +57,7 @@ export default function MotoryzacjaPage() {
             <span className="text-xl font-extrabold tracking-tight">
               Policz<span className="text-blue-600">Dobrze</span>
             </span>
+
           </Link>
 
 

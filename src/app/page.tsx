@@ -25,8 +25,8 @@ const categories = [
     icon: "💰",
     name: "Finanse",
     description:
-      "VAT, marża, raty, procenty i codzienne obliczenia.",
-    href: "#kalkulatory",
+      "VAT, marża, raty, leasing i codzienne obliczenia.",
+    href: "/finanse",
   },
   {
     icon: "🏠",
@@ -68,8 +68,8 @@ export default function Home() {
 
       <Header />
 
-
       {/* HERO */}
+
       <section className="relative overflow-hidden border-b border-slate-200 bg-white">
 
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_rgba(37,99,235,0.14),_transparent_35%),radial-gradient(circle_at_top_left,_rgba(15,23,42,0.06),_transparent_30%)]" />
@@ -79,7 +79,7 @@ export default function Home() {
           <div className="mx-auto max-w-4xl text-center">
 
             <div className="inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-4 py-2 text-sm font-bold text-blue-700">
-              ⚡ Darmowe narzędzia online
+              🧮 Darmowe narzędzia online
             </div>
 
 
@@ -98,6 +98,7 @@ export default function Home() {
 
 
             {/* SEARCH */}
+
             <div className="mx-auto mt-9 max-w-3xl">
 
               <div className="flex items-center rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl shadow-slate-200/60">
@@ -121,8 +122,9 @@ export default function Home() {
                     type="button"
                     onClick={() => setSearch("")}
                     className="mr-2 rounded-lg px-2 py-1 text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                    aria-label="Wyczyść wyszukiwanie"
                   >
-                    ✕
+                    ×
                   </button>
                 )}
 
@@ -135,6 +137,7 @@ export default function Home() {
                   ["Spalanie", "/motoryzacja/spalanie"],
                   ["Koszt przejazdu", "/motoryzacja/koszt-przejazdu"],
                   ["Beton", "/budowa-remont/beton"],
+                  ["VAT", "/finanse/vat"],
                 ].map(([label, href]) => (
 
                   <Link
@@ -159,6 +162,7 @@ export default function Home() {
 
 
       {/* SEARCH RESULTS */}
+
       {search.trim() && (
 
         <section className="mx-auto max-w-7xl px-5 py-12 sm:px-6 lg:px-8">
@@ -263,6 +267,7 @@ export default function Home() {
 
 
       {/* CATEGORIES */}
+
       <section
         id="kalkulatory"
         className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8"
@@ -329,6 +334,7 @@ export default function Home() {
 
                   </div>
 
+
                   <div className="hidden text-2xl text-slate-300 group-hover:text-blue-600 sm:block">
                     →
                   </div>
@@ -360,6 +366,7 @@ export default function Home() {
 
 
       {/* POPULAR */}
+
       <section className="border-y border-slate-200 bg-white py-16">
 
         <div className="mx-auto max-w-7xl px-5 sm:px-6 lg:px-8">
@@ -411,6 +418,7 @@ export default function Home() {
 
 
       {/* HOW IT WORKS */}
+
       <section
         id="jak-dziala"
         className="mx-auto max-w-7xl px-5 py-16 sm:px-6 lg:px-8"

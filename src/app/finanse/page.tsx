@@ -16,6 +16,7 @@ export default function FinansePage() {
     <main className="min-h-screen bg-slate-50 text-slate-900">
 
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
+
         <div className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 sm:px-6 lg:px-8">
 
           <Link
@@ -39,6 +40,7 @@ export default function FinansePage() {
           </Link>
 
         </div>
+
       </header>
 
 
@@ -73,23 +75,23 @@ export default function FinansePage() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 
           {categoryCalculators.map((calculator) => {
+            const isActive =
+              calculator.status === "active" &&
+              calculator.href.startsWith("/");
 
-            const active =
-              calculator.status === "active";
-
-            if (active) {
+            if (isActive) {
               return (
                 <Link
                   key={calculator.name}
                   href={calculator.href}
-                  className="group rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
+                  className="group block rounded-3xl border border-slate-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl"
                 >
 
                   <div className="text-4xl">
                     {calculator.icon}
                   </div>
 
-                  <h2 className="mt-5 text-xl font-black group-hover:text-blue-600">
+                  <h2 className="mt-5 text-xl font-black transition group-hover:text-blue-600">
                     {calculator.name}
                   </h2>
 

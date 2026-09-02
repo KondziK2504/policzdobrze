@@ -193,12 +193,12 @@ export const calculators: Calculator[] = [
     icon: "💼",
     name: "Kalkulator wynagrodzenia brutto netto",
     description:
-      "Oblicz orientacyjne wynagrodzenie netto na podstawie wynagrodzenia brutto i rodzaju umowy.",
+      "Oblicz orientacyjne wynagrodzenie netto dla umowy o pracę.",
     category: "Finanse",
     keywords:
-      "wynagrodzenie brutto netto pensja wypłata umowa praca zarobki",
-    href: "#",
-    status: "coming-soon",
+      "wynagrodzenie brutto netto pensja wypłata umowa o pracę zarobki 2026",
+    href: "/finanse/wynagrodzenie",
+    status: "active",
   },
 
   {

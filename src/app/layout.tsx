@@ -63,6 +63,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
+      <head>
+        <meta
+          name="convertiser-verification"
+          content="0cd3fe0d75772d7926a17c7b2f7ea75c54188a1c"
+        />
+      </head>
+
       <body>
         {children}
         <GoogleAnalytics />

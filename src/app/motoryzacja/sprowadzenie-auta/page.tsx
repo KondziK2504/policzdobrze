@@ -2,27 +2,42 @@
 
 import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
+import { parseNumber } from "@/lib/number";
 
 export default function SprowadzenieAutaPage() {
   const [carPrice, setCarPrice] = useState("");
   const [transport, setTransport] = useState("");
-  const [excise, setExcise] = useState("3.1");
-  const [other, setOther] = useState("");
+  const [exciseRate, setExciseRate] = useState("3.1");
+  const [otherCosts, setOtherCosts] = useState("");
+  const [calculated, setCalculated] = useState(false);
 
-  const price = Number(carPrice);
-  const transportCost = Number(transport);
-  const exciseRate = Number(excise);
-  const otherCost = Number(other);
+  const price = parseNumber(carPrice);
+  const transportCost = parseNumber(transport);
+  const excise = parseNumber(exciseRate);
+  const additionalCosts = parseNumber(otherCosts);
 
   const valid = price > 0;
 
   const exciseCost = valid
-    ? price * (exciseRate / 100)
+    ? price * (excise / 100)
     : 0;
 
   const total = valid
-    ? price + transportCost + exciseCost + otherCost
+    ? price +
+      transportCost +
+      exciseCost +
+      additionalCosts
     : 0;
+
+  function handleCalculate() {
+    if (!valid) {
+      setCalculated(false);
+      return;
+    }
+
+    setCalculated(true);
+  }
 
   return (
     <CalculatorLayout
@@ -49,18 +64,24 @@ export default function SprowadzenieAutaPage() {
         },
       ]}
     >
+      <CalculatorTracker
+        calculator="sprowadzenie-auta"
+        isCalculated={calculated}
+      />
 
       <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-2">
+
+        {/* FORMULARZ */}
 
         <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
           <h2 className="text-xl font-bold">
-            Koszty samochodu
+            Koszty importu
           </h2>
 
           <p className="mt-2 text-sm leading-6 text-slate-500">
-            Wprowadź podstawowe koszty, aby otrzymać orientacyjne
-            podsumowanie importu.
+            Wprowadź cenę samochodu oraz najważniejsze koszty
+            związane z jego sprowadzeniem.
           </p>
 
 
@@ -75,11 +96,13 @@ export default function SprowadzenieAutaPage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={carPrice}
-                  onChange={(e) => setCarPrice(e.target.value)}
+                  onChange={(e) => {
+                    setCarPrice(e.target.value);
+                    setCalculated(false);
+                  }}
                   placeholder="np. 35000"
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
@@ -102,10 +125,13 @@ export default function SprowadzenieAutaPage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
+                  type="text"
+                  inputMode="decimal"
                   value={transport}
-                  onChange={(e) => setTransport(e.target.value)}
+                  onChange={(e) => {
+                    setTransport(e.target.value);
+                    setCalculated(false);
+                  }}
                   placeholder="np. 2500"
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
@@ -126,8 +152,11 @@ export default function SprowadzenieAutaPage() {
               </label>
 
               <select
-                value={excise}
-                onChange={(e) => setExcise(e.target.value)}
+                value={exciseRate}
+                onChange={(e) => {
+                  setExciseRate(e.target.value);
+                  setCalculated(false);
+                }}
                 className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
               >
 
@@ -153,10 +182,13 @@ export default function SprowadzenieAutaPage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  value={other}
-                  onChange={(e) => setOther(e.target.value)}
+                  type="text"
+                  inputMode="decimal"
+                  value={otherCosts}
+                  onChange={(e) => {
+                    setOtherCosts(e.target.value);
+                    setCalculated(false);
+                  }}
                   placeholder="np. 1000"
                   className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
@@ -167,38 +199,59 @@ export default function SprowadzenieAutaPage() {
 
               </div>
 
+              <p className="mt-2 text-xs leading-5 text-slate-400">
+                Możesz uwzględnić np. badanie techniczne,
+                tłumaczenia lub inne wydatki.
+              </p>
+
             </div>
 
           </div>
 
 
-          <div className="mt-7 rounded-2xl border border-amber-100 bg-amber-50 p-5">
+          <button
+            type="button"
+            onClick={handleCalculate}
+            disabled={!valid}
+            className="mt-7 w-full rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+          >
+            Oblicz koszt sprowadzenia
+          </button>
 
-            <div className="font-semibold text-amber-900">
-              ⚠️ Wynik jest orientacyjny
-            </div>
 
-            <p className="mt-2 text-sm leading-6 text-amber-800">
-              Rzeczywiste koszty importu zależą między innymi
-              od rodzaju pojazdu, podstawy opodatkowania,
-              transportu oraz aktualnych przepisów i opłat.
-            </p>
+          <div className="mt-4 rounded-2xl border border-amber-100 bg-amber-50 p-4 text-sm leading-6 text-amber-800">
+
+            <strong>⚠️ Ważne:</strong> wynik ma charakter orientacyjny.
+            Rzeczywiste należności i koszty zależą od konkretnego
+            pojazdu oraz aktualnych przepisów.
 
           </div>
 
         </div>
 
 
+        {/* WYNIK */}
+
         <div className="rounded-3xl bg-slate-950 p-7 text-white shadow-xl">
 
-          <h2 className="text-xl font-bold">
-            Szacunkowy koszt
-          </h2>
+          <div className="flex items-center justify-between">
+
+            <h2 className="text-xl font-bold">
+              Wynik
+            </h2>
+
+            {calculated && (
+              <div className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                Gotowe
+              </div>
+            )}
+
+          </div>
 
 
-          {!valid ? (
+          {!calculated ? (
 
-            <div className="flex min-h-[430px] items-center justify-center text-center">
+            <div className="flex min-h-[440px] items-center justify-center text-center">
 
               <div>
 
@@ -207,9 +260,9 @@ export default function SprowadzenieAutaPage() {
                 </div>
 
                 <p className="mt-5 text-slate-300">
-                  Podaj cenę samochodu,
+                  Wprowadź cenę samochodu
                   <br />
-                  aby rozpocząć obliczenia.
+                  i kliknij „Oblicz”.
                 </p>
 
               </div>
@@ -218,7 +271,7 @@ export default function SprowadzenieAutaPage() {
 
           ) : (
 
-            <div className="mt-7">
+            <div className="mt-7 space-y-4">
 
               <div className="rounded-2xl bg-white/10 p-6">
 
@@ -233,10 +286,9 @@ export default function SprowadzenieAutaPage() {
               </div>
 
 
-              <div className="mt-6 space-y-4">
+              <div className="rounded-2xl bg-white/10 p-5">
 
-                <div className="flex justify-between">
-
+                <div className="flex items-center justify-between py-2">
                   <span className="text-slate-300">
                     Samochód
                   </span>
@@ -244,25 +296,21 @@ export default function SprowadzenieAutaPage() {
                   <strong>
                     {price.toFixed(2)} zł
                   </strong>
-
                 </div>
 
 
-                <div className="flex justify-between">
-
+                <div className="flex items-center justify-between py-2">
                   <span className="text-slate-300">
-                    Akcyza ({exciseRate}%)
+                    Akcyza ({excise.toFixed(1)}%)
                   </span>
 
                   <strong>
                     {exciseCost.toFixed(2)} zł
                   </strong>
-
                 </div>
 
 
-                <div className="flex justify-between">
-
+                <div className="flex items-center justify-between py-2">
                   <span className="text-slate-300">
                     Transport
                   </span>
@@ -270,32 +318,31 @@ export default function SprowadzenieAutaPage() {
                   <strong>
                     {transportCost.toFixed(2)} zł
                   </strong>
-
                 </div>
 
 
-                <div className="flex justify-between">
-
+                <div className="flex items-center justify-between py-2">
                   <span className="text-slate-300">
-                    Pozostałe
+                    Pozostałe koszty
                   </span>
 
                   <strong>
-                    {otherCost.toFixed(2)} zł
+                    {additionalCosts.toFixed(2)} zł
                   </strong>
-
                 </div>
 
               </div>
 
 
-              <div className="mt-6 border-t border-white/10 pt-5">
+              <div className="rounded-2xl bg-blue-500/10 p-5">
 
-                <p className="text-sm leading-6 text-slate-400">
-                  Przed wykorzystaniem wyniku do rzeczywistego
-                  zakupu samochodu sprawdź aktualne stawki
-                  i zasady obowiązujące dla konkretnego pojazdu.
-                </p>
+                <div className="text-sm text-blue-200">
+                  Samochód + wszystkie podane koszty
+                </div>
+
+                <div className="mt-1 text-xl font-bold text-blue-100">
+                  {total.toFixed(2)} zł
+                </div>
 
               </div>
 
@@ -311,25 +358,40 @@ export default function SprowadzenieAutaPage() {
       <div className="mx-auto mt-10 max-w-5xl rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
         <h2 className="text-2xl font-bold">
-          Ile kosztuje sprowadzenie samochodu?
+          Ile kosztuje sprowadzenie auta?
         </h2>
 
         <p className="mt-4 leading-8 text-slate-600">
-          Zakup samochodu za granicą wiąże się nie tylko
-          z ceną pojazdu. Do całkowitego kosztu mogą dojść
-          między innymi transport, akcyza, badanie techniczne,
-          opłaty administracyjne oraz inne wydatki.
+          Przy zakupie samochodu za granicą warto uwzględnić
+          nie tylko cenę pojazdu, ale również transport, akcyzę
+          oraz inne koszty związane z jego sprowadzeniem
+          i przygotowaniem do użytkowania.
         </p>
 
 
+        <div className="mt-6 rounded-2xl border border-amber-100 bg-amber-50 p-5">
+
+          <div className="font-semibold text-amber-900">
+            Kalkulator jest orientacyjny
+          </div>
+
+          <p className="mt-2 text-sm leading-7 text-amber-800">
+            Nie należy traktować wyniku jako ostatecznego wyliczenia
+            należności podatkowych. Przed zakupem należy sprawdzić
+            aktualne zasady dla konkretnego pojazdu.
+          </p>
+
+        </div>
+
+
         <h3 className="mt-8 text-xl font-bold">
-          Kalkulator ma charakter orientacyjny
+          Przykład
         </h3>
 
         <p className="mt-3 leading-8 text-slate-600">
-          Rzeczywisty koszt może być inny w zależności od
-          konkretnego samochodu, sposobu transportu oraz
-          aktualnych przepisów.
+          Samochód kosztujący 35 000 zł, przy założeniu transportu
+          2 500 zł, akcyzy 3,1% oraz 1 000 zł dodatkowych kosztów,
+          daje w kalkulatorze wynik orientacyjny 39 585 zł.
         </p>
 
 
@@ -342,13 +404,27 @@ export default function SprowadzenieAutaPage() {
           <div>
 
             <h4 className="font-semibold">
-              Czy akcyza jest zawsze liczona od ceny samochodu?
+              Czy kalkulator uwzględnia wszystkie koszty importu?
             </h4>
 
             <p className="mt-2 leading-7 text-slate-600">
-              Nie należy traktować tego uproszczonego kalkulatora
-              jako ostatecznego wyliczenia należności. Rzeczywista
-              podstawa obliczenia może zależeć od konkretnego przypadku.
+              Nie. Kalkulator stanowi uproszczone narzędzie do
+              wstępnego oszacowania kosztu. Rzeczywiste koszty mogą
+              zależeć od wielu dodatkowych czynników.
+            </p>
+
+          </div>
+
+
+          <div>
+
+            <h4 className="font-semibold">
+              Czy mogę wpisać wartości z przecinkiem?
+            </h4>
+
+            <p className="mt-2 leading-7 text-slate-600">
+              Tak. Możesz wpisywać zarówno np. 35000,50,
+              jak i 35000.50.
             </p>
 
           </div>

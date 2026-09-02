@@ -1,28 +1,51 @@
 "use client";
 
-import CalculatorLayout from "@/components/CalculatorLayout";
 import { useState } from "react";
+import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
+import { parseNumber } from "@/lib/number";
 
 export default function KosztPaliwaPage() {
   const [distance, setDistance] = useState("");
   const [consumption, setConsumption] = useState("");
   const [price, setPrice] = useState("");
+  const [calculated, setCalculated] = useState(false);
 
-  const km = Number(distance);
-  const fuel = Number(consumption);
-  const fuelPrice = Number(price);
+  const km = parseNumber(distance);
+  const lPer100 = parseNumber(consumption);
+  const fuelPrice = parseNumber(price);
 
-  const valid = km > 0 && fuel > 0 && fuelPrice > 0;
+  const valid =
+    km > 0 &&
+    lPer100 > 0 &&
+    fuelPrice > 0;
 
-  const liters = valid ? (km * fuel) / 100 : 0;
-  const totalCost = valid ? liters * fuelPrice : 0;
-  const costPer100 = valid ? fuel * fuelPrice : 0;
+  const liters = valid
+    ? (km * lPer100) / 100
+    : 0;
+
+  const totalCost = valid
+    ? liters * fuelPrice
+    : 0;
+
+  const costPer100 = valid
+    ? lPer100 * fuelPrice
+    : 0;
+
+  function handleCalculate() {
+    if (!valid) {
+      setCalculated(false);
+      return;
+    }
+
+    setCalculated(true);
+  }
 
   return (
     <CalculatorLayout
       icon="💰"
       title="Kalkulator kosztu paliwa"
-      description="Oblicz, ile paliwa potrzebujesz i ile będzie kosztować przejazd wybranej trasy."
+      description="Oblicz ilość potrzebnego paliwa, koszt 100 km oraz całkowity koszt przejazdu."
       categoryName="Motoryzacja"
       categoryHref="/motoryzacja"
       related={[
@@ -43,8 +66,14 @@ export default function KosztPaliwaPage() {
         },
       ]}
     >
+      <CalculatorTracker
+        calculator="koszt-paliwa"
+        isCalculated={calculated}
+      />
 
       <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-2">
+
+        {/* FORMULARZ */}
 
         <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
@@ -53,7 +82,7 @@ export default function KosztPaliwaPage() {
           </h2>
 
           <p className="mt-2 text-sm leading-6 text-slate-500">
-            Podaj dystans, średnie spalanie oraz cenę jednego
+            Podaj dystans, spalanie samochodu i cenę jednego
             litra paliwa.
           </p>
 
@@ -69,13 +98,15 @@ export default function KosztPaliwaPage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.1"
+                  type="text"
+                  inputMode="decimal"
                   value={distance}
-                  onChange={(e) => setDistance(e.target.value)}
+                  onChange={(e) => {
+                    setDistance(e.target.value);
+                    setCalculated(false);
+                  }}
                   placeholder="np. 500"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -90,19 +121,21 @@ export default function KosztPaliwaPage() {
             <div>
 
               <label className="mb-2 block text-sm font-semibold">
-                Spalanie
+                Średnie spalanie
               </label>
 
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.1"
+                  type="text"
+                  inputMode="decimal"
                   value={consumption}
-                  onChange={(e) => setConsumption(e.target.value)}
-                  placeholder="np. 7.0"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-24 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  onChange={(e) => {
+                    setConsumption(e.target.value);
+                    setCalculated(false);
+                  }}
+                  placeholder="np. 7,5"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-24 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -123,13 +156,15 @@ export default function KosztPaliwaPage() {
               <div className="relative">
 
                 <input
-                  type="number"
-                  min="0"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={price}
-                  onChange={(e) => setPrice(e.target.value)}
-                  placeholder="np. 6.50"
-                  className="w-full rounded-xl border border-slate-300 px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  onChange={(e) => {
+                    setPrice(e.target.value);
+                    setCalculated(false);
+                  }}
+                  placeholder="np. 6,50"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -142,18 +177,46 @@ export default function KosztPaliwaPage() {
 
           </div>
 
+
+          <button
+            type="button"
+            onClick={handleCalculate}
+            disabled={!valid}
+            className="mt-7 w-full rounded-xl bg-blue-600 px-5 py-3.5 text-sm font-bold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-slate-300"
+          >
+            Oblicz koszt paliwa
+          </button>
+
+
+          <div className="mt-4 rounded-2xl border border-blue-100 bg-blue-50 p-4 text-sm leading-6 text-blue-800">
+            💡 Przecinek i kropka działają tak samo.
+          </div>
+
         </div>
 
 
+        {/* WYNIK */}
+
         <div className="rounded-3xl bg-slate-950 p-7 text-white shadow-xl">
 
-          <h2 className="text-xl font-bold">
-            Wynik
-          </h2>
+          <div className="flex items-center justify-between">
 
-          {!valid ? (
+            <h2 className="text-xl font-bold">
+              Wynik
+            </h2>
 
-            <div className="flex min-h-[360px] items-center justify-center text-center">
+            {calculated && (
+              <div className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
+                Gotowe
+              </div>
+            )}
+
+          </div>
+
+
+          {!calculated ? (
+
+            <div className="flex min-h-[390px] items-center justify-center text-center">
 
               <div>
 
@@ -162,9 +225,9 @@ export default function KosztPaliwaPage() {
                 </div>
 
                 <p className="mt-5 text-slate-300">
-                  Wprowadź dane przejazdu,
+                  Wprowadź dane i kliknij
                   <br />
-                  aby zobaczyć wynik.
+                  „Oblicz koszt paliwa”.
                 </p>
 
               </div>
@@ -233,23 +296,28 @@ export default function KosztPaliwaPage() {
         </h2>
 
         <p className="mt-4 leading-8 text-slate-600">
-          Do obliczenia kosztu paliwa potrzebujesz znać
-          dystans przejazdu, średnie spalanie samochodu
-          oraz aktualną cenę jednego litra paliwa.
+          Aby obliczyć koszt paliwa, potrzebujesz znać dystans,
+          średnie spalanie samochodu oraz cenę jednego litra paliwa.
         </p>
+
 
         <div className="mt-6 rounded-2xl bg-slate-50 p-5">
 
           <div className="font-semibold">
-            Wzór:
+            Ilość potrzebnego paliwa:
           </div>
 
           <div className="mt-3 font-mono text-sm text-slate-600">
-            ilość paliwa = dystans × spalanie ÷ 100
+            paliwo = dystans × spalanie ÷ 100
           </div>
 
-          <div className="mt-2 font-mono text-sm text-slate-600">
-            koszt = ilość paliwa × cena paliwa
+
+          <div className="mt-4 font-semibold">
+            Koszt paliwa:
+          </div>
+
+          <div className="mt-3 font-mono text-sm text-slate-600">
+            koszt = paliwo × cena za litr
           </div>
 
         </div>
@@ -260,10 +328,9 @@ export default function KosztPaliwaPage() {
         </h3>
 
         <p className="mt-3 leading-8 text-slate-600">
-          Przy dystansie 500 km, spalaniu 7 l/100 km
-          i cenie paliwa 6,50 zł/l samochód potrzebuje
-          około 35 litrów paliwa, a koszt przejazdu wyniesie
-          227,50 zł.
+          Dla dystansu 500 km, spalania 7,5 l/100 km oraz
+          ceny 6,50 zł/l samochód potrzebuje 37,5 litra paliwa.
+          Koszt wyniesie 243,75 zł.
         </p>
 
 
@@ -276,12 +343,26 @@ export default function KosztPaliwaPage() {
           <div>
 
             <h4 className="font-semibold">
-              Czy kalkulator uwzględnia podróż w obie strony?
+              Czy kalkulator działa dla benzyny, diesla i LPG?
             </h4>
 
             <p className="mt-2 leading-7 text-slate-600">
-              W tym kalkulatorze podajesz całkowity dystans,
-              dlatego wystarczy wpisać od razu trasę tam i z powrotem.
+              Tak. W każdym przypadku podajesz rzeczywiste spalanie
+              oraz cenę paliwa za litr.
+            </p>
+
+          </div>
+
+
+          <div>
+
+            <h4 className="font-semibold">
+              Czy mogę wpisać cenę 6,50?
+            </h4>
+
+            <p className="mt-2 leading-7 text-slate-600">
+              Tak. Kalkulator obsługuje zarówno przecinek,
+              jak i kropkę.
             </p>
 
           </div>

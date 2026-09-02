@@ -2,15 +2,14 @@ import Link from "next/link";
 import { calculators } from "@/data/calculators";
 
 export const metadata = {
-  title: "Kalkulatory budowlane i remontowe",
+  title: "Kalkulatory budowlane i remontowe – beton, płytki, farba",
   description:
-    "Darmowe kalkulatory budowlane i remontowe. Oblicz beton, kostkę brukową, farbę, płytki, piasek, żwir i cement.",
+    "Darmowe kalkulatory budowlane i remontowe. Oblicz ilość betonu, cementu, farby, płytek, kostki brukowej, piasku i żwiru.",
 };
 
 export default function BudowaRemontPage() {
   const categoryCalculators = calculators.filter(
-    (calculator) =>
-      calculator.category === "Budowa i remont",
+    (calculator) => calculator.category === "Budowa i remont",
   );
 
   const activeCalculators = categoryCalculators.filter(
@@ -19,6 +18,8 @@ export default function BudowaRemontPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 text-slate-900">
+
+      {/* HEADER */}
 
       <header className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
 
@@ -39,7 +40,7 @@ export default function BudowaRemontPage() {
 
           <Link
             href="/"
-            className="rounded-xl px-3 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 hover:text-blue-600"
+            className="rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-blue-600"
           >
             ← Strona główna
           </Link>
@@ -49,11 +50,40 @@ export default function BudowaRemontPage() {
       </header>
 
 
+      {/* BREADCRUMBS */}
+
+      <nav
+        aria-label="Okruszki nawigacyjne"
+        className="mx-auto max-w-7xl px-5 pt-6 sm:px-6 lg:px-8"
+      >
+
+        <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500">
+
+          <Link
+            href="/"
+            className="transition hover:text-blue-600"
+          >
+            PoliczDobrze
+          </Link>
+
+          <span>/</span>
+
+          <span className="font-medium text-slate-900">
+            Budowa i remont
+          </span>
+
+        </div>
+
+      </nav>
+
+
+      {/* HERO */}
+
       <section className="border-b border-slate-200 bg-white">
 
-        <div className="mx-auto max-w-7xl px-5 pb-16 pt-14 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-5 pb-16 pt-10 sm:px-6 lg:px-8">
 
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
 
             <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 text-4xl">
               🏗️
@@ -63,10 +93,30 @@ export default function BudowaRemontPage() {
               Kalkulatory budowlane i remontowe
             </h1>
 
-            <p className="mt-5 text-lg leading-8 text-slate-600">
+            <p className="mt-5 max-w-3xl text-lg leading-8 text-slate-600">
               Oblicz ilość materiałów potrzebnych podczas budowy,
-              remontu i prac wykończeniowych.
+              remontu i prac wykończeniowych. Sprawdź potrzebną ilość
+              betonu, cementu, farby, płytek, kostki brukowej, piasku
+              i żwiru.
             </p>
+
+            <div className="mt-7 flex flex-wrap gap-3">
+
+              <a
+                href="#kalkulatory"
+                className="rounded-xl bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700"
+              >
+                Zobacz kalkulatory
+              </a>
+
+              <Link
+                href="/budowa-remont/beton"
+                className="rounded-xl border border-slate-300 bg-white px-5 py-3 font-bold text-slate-700 transition hover:border-blue-200 hover:text-blue-600"
+              >
+                Kalkulator betonu →
+              </Link>
+
+            </div>
 
           </div>
 
@@ -75,7 +125,12 @@ export default function BudowaRemontPage() {
       </section>
 
 
-      <section className="mx-auto max-w-7xl px-5 py-14 sm:px-6 lg:px-8">
+      {/* CALCULATORS */}
+
+      <section
+        id="kalkulatory"
+        className="mx-auto max-w-7xl px-5 py-14 sm:px-6 lg:px-8"
+      >
 
         <div className="mb-8">
 
@@ -83,9 +138,15 @@ export default function BudowaRemontPage() {
             {activeCalculators.length} dostępnych narzędzi
           </div>
 
-          <h2 className="mt-2 text-3xl font-black">
+          <h2 className="mt-2 text-3xl font-black sm:text-4xl">
             Wybierz kalkulator
           </h2>
+
+          <p className="mt-4 max-w-2xl leading-7 text-slate-600">
+            Wybierz materiał lub rodzaj prac, które chcesz
+            oszacować. Wynik otrzymasz od razu po wpisaniu
+            potrzebnych danych.
+          </p>
 
         </div>
 
@@ -94,7 +155,8 @@ export default function BudowaRemontPage() {
 
           {categoryCalculators.map((calculator) => {
 
-            const active = calculator.status === "active";
+            const active =
+              calculator.status === "active";
 
             if (!active) {
               return (
@@ -107,9 +169,9 @@ export default function BudowaRemontPage() {
                     {calculator.icon}
                   </div>
 
-                  <h2 className="mt-5 text-xl font-black">
+                  <h3 className="mt-5 text-xl font-black">
                     {calculator.name}
-                  </h2>
+                  </h3>
 
                   <p className="mt-3 leading-7 text-slate-600">
                     {calculator.description}
@@ -123,7 +185,6 @@ export default function BudowaRemontPage() {
               );
             }
 
-
             return (
               <Link
                 key={calculator.name}
@@ -135,9 +196,9 @@ export default function BudowaRemontPage() {
                   {calculator.icon}
                 </div>
 
-                <h2 className="mt-5 text-xl font-black group-hover:text-blue-600">
+                <h3 className="mt-5 text-xl font-black group-hover:text-blue-600">
                   {calculator.name}
-                </h2>
+                </h3>
 
                 <p className="mt-3 leading-7 text-slate-600">
                   {calculator.description}
@@ -149,6 +210,7 @@ export default function BudowaRemontPage() {
 
               </Link>
             );
+
           })}
 
         </div>
@@ -156,32 +218,231 @@ export default function BudowaRemontPage() {
       </section>
 
 
+      {/* BETON */}
+
       <section className="bg-white py-16">
 
         <div className="mx-auto max-w-4xl px-5 sm:px-6">
 
           <h2 className="text-3xl font-black">
-            Kalkulatory materiałów budowlanych
+            Kalkulator betonu
           </h2>
 
           <p className="mt-5 leading-8 text-slate-600">
-            Podczas budowy lub remontu odpowiednie obliczenie
-            ilości materiałów pomaga lepiej zaplanować zakupy.
-            Kalkulatory na PoliczDobrze pozwalają szybko oszacować
-            potrzebną ilość betonu, kostki, farby, płytek, kruszyw
-            i cementu.
+            Przy planowaniu fundamentu, płyty, posadzki lub innego
+            elementu betonowego ważne jest określenie jego objętości.
+            Kalkulator betonu pozwala szybko obliczyć potrzebną ilość
+            mieszanki na podstawie wymiarów.
+          </p>
+
+          <Link
+            href="/budowa-remont/beton"
+            className="mt-5 inline-flex rounded-xl bg-blue-600 px-5 py-3 font-bold text-white transition hover:bg-blue-700"
+          >
+            Oblicz ilość betonu →
+          </Link>
+
+        </div>
+
+      </section>
+
+
+      {/* KOSTKA */}
+
+      <section className="border-y border-slate-200 bg-slate-50 py-16">
+
+        <div className="mx-auto max-w-4xl px-5 sm:px-6">
+
+          <h2 className="text-3xl font-black">
+            Kalkulator kostki brukowej
+          </h2>
+
+          <p className="mt-5 leading-8 text-slate-600">
+            Przy zakupie kostki brukowej warto uwzględnić całą
+            powierzchnię podjazdu, chodnika lub tarasu oraz dodatkowy
+            zapas. Kalkulator pomaga oszacować potrzebną powierzchnię
+            i ilość materiału.
+          </p>
+
+          <Link
+            href="/budowa-remont/kostka-brukowa"
+            className="mt-5 inline-flex rounded-xl bg-slate-950 px-5 py-3 font-bold text-white transition hover:bg-slate-800"
+          >
+            Oblicz kostkę brukową →
+          </Link>
+
+        </div>
+
+      </section>
+
+
+      {/* FARBA I PŁYTKI */}
+
+      <section className="bg-white py-16">
+
+        <div className="mx-auto max-w-4xl px-5 sm:px-6">
+
+          <h2 className="text-3xl font-black">
+            Farba, płytki i materiały wykończeniowe
+          </h2>
+
+          <p className="mt-5 leading-8 text-slate-600">
+            Przy remoncie istotne jest właściwe oszacowanie ilości
+            materiału. Zbyt mały zakup może oznaczać dodatkową wizytę
+            w sklepie, a zbyt duży — niepotrzebny koszt. Kalkulatory
+            pomagają określić orientacyjną ilość farby i płytek
+            potrzebnych do wykonania prac.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+
+            <Link
+              href="/budowa-remont/farba"
+              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
+            >
+              Kalkulator farby
+            </Link>
+
+            <Link
+              href="/budowa-remont/plytki"
+              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
+            >
+              Kalkulator płytek
+            </Link>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* KRUSZYWA */}
+
+      <section className="border-y border-slate-200 bg-slate-50 py-16">
+
+        <div className="mx-auto max-w-4xl px-5 sm:px-6">
+
+          <h2 className="text-3xl font-black">
+            Piasek, żwir i cement
+          </h2>
+
+          <p className="mt-5 leading-8 text-slate-600">
+            Przy pracach budowlanych często trzeba przeliczyć objętość
+            materiału na przybliżoną masę albo liczbę worków. Dotyczy
+            to między innymi piasku, żwiru, kruszyw i cementu.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-3">
+
+            <Link
+              href="/budowa-remont/piasek-i-zwir"
+              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
+            >
+              Kalkulator piasku i żwiru
+            </Link>
+
+            <Link
+              href="/budowa-remont/cement"
+              className="rounded-xl bg-slate-100 px-4 py-2.5 text-sm font-bold text-slate-700 transition hover:bg-blue-50 hover:text-blue-600"
+            >
+              Kalkulator cementu
+            </Link>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* CONTENT */}
+
+      <section className="bg-white py-16">
+
+        <div className="mx-auto max-w-4xl px-5 sm:px-6">
+
+          <h2 className="text-3xl font-black">
+            Jak obliczać ilość materiałów budowlanych?
+          </h2>
+
+          <p className="mt-5 leading-8 text-slate-600">
+            Podstawą wielu obliczeń budowlanych są wymiary powierzchni
+            lub objętości. W zależności od materiału wynik może być
+            później przeliczany na litry, kilogramy, tony, metry
+            kwadratowe, metry sześcienne albo liczbę sztuk.
           </p>
 
           <p className="mt-5 leading-8 text-slate-600">
-            Wyniki mają charakter orientacyjny. Rzeczywiste
-            zużycie może zależeć od rodzaju materiału, podłoża,
-            sposobu wykonania oraz strat podczas prac.
+            Warto również pamiętać o zapasie materiału. Rzeczywiste
+            zużycie może różnić się od wyniku kalkulatora ze względu
+            na sposób wykonania, nierówności podłoża, straty podczas
+            cięcia lub mieszania oraz właściwości konkretnego produktu.
           </p>
 
         </div>
 
       </section>
 
+
+      {/* FAQ */}
+
+      <section className="mx-auto max-w-4xl px-5 py-16 sm:px-6">
+
+        <h2 className="text-3xl font-black">
+          FAQ – kalkulatory budowlane i remontowe
+        </h2>
+
+        <div className="mt-8 space-y-7">
+
+          <div>
+
+            <h3 className="text-lg font-bold">
+              Czy kalkulatory są darmowe?
+            </h3>
+
+            <p className="mt-2 leading-7 text-slate-600">
+              Tak. Wszystkie dostępne kalkulatory na PoliczDobrze
+              można używać bez rejestracji.
+            </p>
+
+          </div>
+
+
+          <div>
+
+            <h3 className="text-lg font-bold">
+              Czy wynik jest dokładną ilością materiału?
+            </h3>
+
+            <p className="mt-2 leading-7 text-slate-600">
+              Wynik ma charakter orientacyjny. Rzeczywiste zużycie
+              zależy między innymi od rodzaju materiału, wykonania
+              oraz strat podczas prac.
+            </p>
+
+          </div>
+
+
+          <div>
+
+            <h3 className="text-lg font-bold">
+              Czy mogę korzystać z kalkulatorów na telefonie?
+            </h3>
+
+            <p className="mt-2 leading-7 text-slate-600">
+              Tak. Strona jest przystosowana również do urządzeń
+              mobilnych.
+            </p>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      {/* FOOTER */}
 
       <footer className="border-t border-slate-200 bg-white">
 

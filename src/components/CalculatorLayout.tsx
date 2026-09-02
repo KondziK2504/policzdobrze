@@ -34,15 +34,19 @@ export default function CalculatorLayout({
       <Header />
 
       {/* HERO */}
+
       <section className="border-b border-slate-200 bg-white">
 
         <div className="mx-auto max-w-6xl px-5 pb-12 pt-8 sm:px-6 sm:pb-14 lg:px-8">
 
-          <div className="mb-8 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+          <nav
+            aria-label="Okruszki nawigacyjne"
+            className="mb-8 flex flex-wrap items-center gap-2 text-sm text-slate-500"
+          >
 
             <Link
               href="/"
-              className="hover:text-blue-600"
+              className="transition hover:text-blue-600"
             >
               PoliczDobrze
             </Link>
@@ -51,18 +55,21 @@ export default function CalculatorLayout({
 
             <Link
               href={categoryHref}
-              className="hover:text-blue-600"
+              className="transition hover:text-blue-600"
             >
               {categoryName}
             </Link>
 
             <span>/</span>
 
-            <span className="text-slate-700">
+            <span
+              aria-current="page"
+              className="text-slate-700"
+            >
               {title}
             </span>
 
-          </div>
+          </nav>
 
 
           <div className="mx-auto max-w-3xl text-center">
@@ -87,12 +94,14 @@ export default function CalculatorLayout({
 
 
       {/* CALCULATOR */}
+
       <section className="px-5 py-10 sm:px-6 sm:py-14 lg:px-8">
         {children}
       </section>
 
 
       {/* RELATED */}
+
       {related.length > 0 && (
 
         <section className="border-t border-slate-200 bg-white py-14">
@@ -110,29 +119,58 @@ export default function CalculatorLayout({
 
             <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 
-              {related.map((calculator) => (
+              {related.map((calculator, index) => {
 
-                <Link
-                  key={calculator.href}
-                  href={calculator.href}
-                  className="group rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg"
-                >
+                const isInternalLink =
+                  calculator.href.startsWith("/") &&
+                  calculator.href !== "#";
 
-                  <div className="text-3xl">
-                    {calculator.icon}
-                  </div>
+                if (!isInternalLink) {
+                  return (
+                    <div
+                      key={`${calculator.title}-${calculator.href}-${index}`}
+                      className="rounded-2xl border border-slate-200 bg-slate-50 p-5 opacity-60"
+                    >
 
-                  <div className="mt-4 font-bold text-slate-900 group-hover:text-blue-600">
-                    {calculator.title}
-                  </div>
+                      <div className="text-3xl">
+                        {calculator.icon}
+                      </div>
 
-                  <div className="mt-3 text-sm font-semibold text-blue-600">
-                    Otwórz kalkulator →
-                  </div>
+                      <div className="mt-4 font-bold text-slate-900">
+                        {calculator.title}
+                      </div>
 
-                </Link>
+                      <div className="mt-3 text-sm font-semibold text-slate-400">
+                        Wkrótce
+                      </div>
 
-              ))}
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={`${calculator.title}-${calculator.href}-${index}`}
+                    href={calculator.href}
+                    className="group rounded-2xl border border-slate-200 bg-slate-50 p-5 transition hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg"
+                  >
+
+                    <div className="text-3xl">
+                      {calculator.icon}
+                    </div>
+
+                    <div className="mt-4 font-bold text-slate-900 group-hover:text-blue-600">
+                      {calculator.title}
+                    </div>
+
+                    <div className="mt-3 text-sm font-semibold text-blue-600">
+                      Otwórz kalkulator →
+                    </div>
+
+                  </Link>
+                );
+
+              })}
 
             </div>
 

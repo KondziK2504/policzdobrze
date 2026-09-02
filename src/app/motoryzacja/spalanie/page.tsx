@@ -1,40 +1,40 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import { parseNumber } from "@/lib/number";
 
 export default function SpalaniePage() {
   const [distance, setDistance] = useState("");
-  const [fuel, setFuel] = useState("");
+  const [consumption, setConsumption] = useState("");
   const [fuelPrice, setFuelPrice] = useState("");
 
   const km = parseNumber(distance);
-  const liters = parseNumber(fuel);
+  const lPer100 = parseNumber(consumption);
   const price = parseNumber(fuelPrice);
 
-  const hasBasicData = km > 0 && liters > 0;
+  const valid = km > 0 && lPer100 > 0;
 
-  const consumption = hasBasicData
-    ? (liters / km) * 100
+  const litersNeeded = valid
+    ? (km * lPer100) / 100
     : 0;
 
   const costPer100 =
-    hasBasicData && price > 0
-      ? consumption * price
+    valid && price > 0
+      ? lPer100 * price
       : 0;
 
   const totalCost =
-    hasBasicData && price > 0
-      ? liters * price
+    valid && price > 0
+      ? litersNeeded * price
       : 0;
 
   return (
     <CalculatorLayout
       icon="⛽"
       title="Kalkulator spalania samochodu"
-      description="Oblicz średnie spalanie samochodu, koszt przejechania 100 km oraz koszt zużytego paliwa."
+      description="Sprawdź koszt paliwa na podstawie dystansu, średniego spalania i ceny paliwa."
       categoryName="Motoryzacja"
       categoryHref="/motoryzacja"
       related={[
@@ -59,10 +59,11 @@ export default function SpalaniePage() {
       <div className="mx-auto grid max-w-5xl gap-8 lg:grid-cols-2">
 
         {/* FORMULARZ */}
+
         <div className="rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
           <h2 className="text-xl font-bold">
-            Wprowadź dane
+            Dane przejazdu
           </h2>
 
           <p className="mt-2 text-sm leading-6 text-slate-500">
@@ -76,7 +77,7 @@ export default function SpalaniePage() {
             <div>
 
               <label className="mb-2 block text-sm font-semibold">
-                Przejechany dystans
+                Dystans
               </label>
 
               <div className="relative">
@@ -87,7 +88,7 @@ export default function SpalaniePage() {
                   value={distance}
                   onChange={(e) => setDistance(e.target.value)}
                   placeholder="np. 520"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-16 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-14 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
@@ -102,7 +103,7 @@ export default function SpalaniePage() {
             <div>
 
               <label className="mb-2 block text-sm font-semibold">
-                Zużyte paliwo
+                Średnie spalanie
               </label>
 
               <div className="relative">
@@ -110,14 +111,14 @@ export default function SpalaniePage() {
                 <input
                   type="text"
                   inputMode="decimal"
-                  value={fuel}
-                  onChange={(e) => setFuel(e.target.value)}
-                  placeholder="np. 42"
-                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-20 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
+                  value={consumption}
+                  onChange={(e) => setConsumption(e.target.value)}
+                  placeholder="np. 7,5"
+                  className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 pr-24 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10"
                 />
 
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
-                  litrów
+                  l/100 km
                 </span>
 
               </div>
@@ -159,12 +160,27 @@ export default function SpalaniePage() {
           <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50 p-5">
 
             <div className="font-semibold text-blue-900">
-              💡 Wpisuj 7,5 albo 7.5
+              💡 Przecinek lub kropka
             </div>
 
             <p className="mt-2 text-sm leading-6 text-blue-800">
-              PoliczDobrze automatycznie rozpoznaje zarówno przecinek,
-              jak i kropkę jako separator dziesiętny.
+              Możesz wpisać na przykład 7,5 albo 7.5.
+              Kalkulator rozpozna oba zapisy.
+            </p>
+
+          </div>
+
+
+          <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 p-5">
+
+            <div className="font-semibold text-slate-900">
+              📌 Skąd wziąć średnie spalanie?
+            </div>
+
+            <p className="mt-2 text-sm leading-6 text-slate-600">
+              Możesz użyć wskazania komputera pokładowego
+              albo średniego spalania obliczonego na podstawie
+              tankowania.
             </p>
 
           </div>
@@ -173,6 +189,7 @@ export default function SpalaniePage() {
 
 
         {/* WYNIK */}
+
         <div className="rounded-3xl bg-slate-950 p-7 text-white shadow-xl">
 
           <div className="flex items-center justify-between">
@@ -181,16 +198,18 @@ export default function SpalaniePage() {
               Wynik
             </h2>
 
-            {hasBasicData && (
+            {valid && (
+
               <div className="rounded-full bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-300">
                 Gotowe
               </div>
+
             )}
 
           </div>
 
 
-          {!hasBasicData ? (
+          {!valid ? (
 
             <div className="flex min-h-[390px] items-center justify-center text-center">
 
@@ -201,9 +220,7 @@ export default function SpalaniePage() {
                 </div>
 
                 <p className="mt-5 text-slate-300">
-                  Wprowadź dystans oraz ilość
-                  <br />
-                  zużytego paliwa.
+                  Wprowadź dystans oraz średnie spalanie.
                 </p>
 
               </div>
@@ -222,7 +239,7 @@ export default function SpalaniePage() {
 
                 <div className="mt-2 text-5xl font-extrabold tracking-tight">
 
-                  {consumption.toFixed(2)}
+                  {lPer100.toFixed(2)}
 
                   <span className="ml-2 text-xl font-medium text-slate-300">
                     l/100 km
@@ -251,11 +268,11 @@ export default function SpalaniePage() {
                 <div className="rounded-2xl bg-white/10 p-5">
 
                   <div className="text-sm text-slate-300">
-                    Zużyte paliwo
+                    Potrzebne paliwo
                   </div>
 
                   <div className="mt-1 text-xl font-bold">
-                    {liters.toFixed(2)} l
+                    {litersNeeded.toFixed(2)} l
                   </div>
 
                 </div>
@@ -283,7 +300,7 @@ export default function SpalaniePage() {
                   <div className="flex items-center justify-between py-2">
 
                     <span className="text-slate-300">
-                      Koszt zużytego paliwa
+                      Koszt całego przejazdu
                     </span>
 
                     <strong className="text-lg">
@@ -305,27 +322,37 @@ export default function SpalaniePage() {
       </div>
 
 
-      {/* SEO */}
+      {/* TREŚĆ */}
+
       <div className="mx-auto mt-10 max-w-5xl rounded-3xl border border-slate-200 bg-white p-7 shadow-sm">
 
         <h2 className="text-2xl font-bold">
-          Jak obliczyć spalanie samochodu?
+          Jak obliczyć koszt paliwa?
         </h2>
 
         <p className="mt-4 leading-8 text-slate-600">
-          Aby obliczyć średnie spalanie samochodu, podziel ilość
-          zużytego paliwa przez przejechany dystans i pomnóż wynik
-          przez 100.
+          Znając dystans, średnie spalanie samochodu oraz cenę
+          paliwa, możesz łatwo oszacować ilość potrzebnego paliwa
+          i koszt przejazdu.
         </p>
+
 
         <div className="mt-6 rounded-2xl bg-slate-50 p-5">
 
           <div className="font-semibold">
-            Wzór:
+            Wzór na ilość paliwa:
           </div>
 
           <div className="mt-3 font-mono text-sm text-slate-600">
-            spalanie = paliwo ÷ dystans × 100
+            paliwo = dystans × spalanie ÷ 100
+          </div>
+
+          <div className="mt-4 font-semibold">
+            Wzór na koszt:
+          </div>
+
+          <div className="mt-3 font-mono text-sm text-slate-600">
+            koszt = ilość paliwa × cena paliwa
           </div>
 
         </div>
@@ -336,8 +363,9 @@ export default function SpalaniePage() {
         </h3>
 
         <p className="mt-3 leading-8 text-slate-600">
-          Jeśli samochód przejechał 520 km i zużył 42 litry paliwa,
-          spalanie wynosi około 8,08 l/100 km.
+          Samochód ze spalaniem 7,5 l/100 km na trasie 520 km
+          zużyje około 39 litrów paliwa. Przy cenie 6,50 zł/l
+          koszt paliwa wyniesie około 253,50 zł.
         </p>
 
 
@@ -350,25 +378,41 @@ export default function SpalaniePage() {
           <div>
 
             <h4 className="font-semibold">
-              Czy mogę wpisać przecinek zamiast kropki?
+              Czy mogę wpisać 7,5 zamiast 7.5?
             </h4>
 
             <p className="mt-2 leading-7 text-slate-600">
-              Tak. Kalkulator rozpoznaje zarówno zapis 7,5,
-              jak i 7.5.
+              Tak. Kalkulator obsługuje zarówno przecinek,
+              jak i kropkę.
             </p>
 
           </div>
 
+
           <div>
 
             <h4 className="font-semibold">
-              Czy cena paliwa jest obowiązkowa?
+              Czy kalkulator działa dla LPG?
             </h4>
 
             <p className="mt-2 leading-7 text-slate-600">
-              Nie. Cena paliwa jest potrzebna tylko wtedy,
-              gdy chcesz obliczyć koszt przejazdu.
+              Tak. Wystarczy wpisać spalanie samochodu w litrach
+              na 100 kilometrów oraz cenę LPG za litr.
+            </p>
+
+          </div>
+
+
+          <div>
+
+            <h4 className="font-semibold">
+              Jak dokładnie obliczyć spalanie samochodu?
+            </h4>
+
+            <p className="mt-2 leading-7 text-slate-600">
+              Najlepiej na podstawie tankowania do pełna.
+              To pozwala wyznaczyć rzeczywiste średnie zużycie
+              paliwa na podstawie przejechanego dystansu.
             </p>
 
           </div>

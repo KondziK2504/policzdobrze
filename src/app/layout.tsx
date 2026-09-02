@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 
 const siteUrl = "https://policzdobrze.pl";
 
@@ -30,7 +31,8 @@ export const metadata: Metadata = {
 
   openGraph: {
     title: "PoliczDobrze.pl – Darmowe kalkulatory online",
-    description: "Proste i darmowe kalkulatory do codziennych obliczeń.",
+    description:
+      "Proste i darmowe kalkulatory do codziennych obliczeń.",
     url: siteUrl,
     siteName: "PoliczDobrze.pl",
     locale: "pl_PL",
@@ -40,7 +42,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "PoliczDobrze.pl – Darmowe kalkulatory online",
-    description: "Proste i darmowe kalkulatory do codziennych obliczeń.",
+    description:
+      "Proste i darmowe kalkulatory do codziennych obliczeń.",
   },
 
   robots: {
@@ -60,7 +63,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
-      <body>{children}</body>
+      <body>
+        {children}
+        <GoogleAnalytics />
+      </body>
     </html>
   );
 }

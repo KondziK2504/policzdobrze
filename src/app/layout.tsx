@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import GoogleAnalytics from "@/components/GoogleAnalytics";
+import "./globals.css";
 
-const siteUrl = "https://www.policzdobrze.pl";
+const siteUrl = "https://policzdobrze.pl";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -13,17 +13,21 @@ export const metadata: Metadata = {
   },
 
   description:
-    "Darmowe kalkulatory online do szybkiego obliczania kosztów, cen, spalania samochodu, VAT, leasingu, wynagrodzenia i wielu innych wartości.",
+    "Darmowe kalkulatory online. Oblicz koszty paliwa, spalanie samochodu, koszt podróży, sprowadzenie auta i wiele innych rzeczy.",
 
-  authors: [
-    {
-      name: "PoliczDobrze.pl",
-      url: siteUrl,
-    },
+  keywords: [
+    "kalkulator",
+    "kalkulatory online",
+    "darmowe kalkulatory",
+    "kalkulator paliwa",
+    "kalkulator spalania",
+    "kalkulator kosztu przejazdu",
+    "kalkulator sprowadzenia auta",
   ],
 
-  creator: "PoliczDobrze.pl",
-  publisher: "PoliczDobrze.pl",
+  alternates: {
+    canonical: siteUrl,
+  },
 
   openGraph: {
     title: "PoliczDobrze.pl – Darmowe kalkulatory online",
@@ -48,17 +52,8 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-      "max-video-preview": -1,
     },
   },
-
-  icons: {
-    icon: "/icon.svg",
-  },
-
-  category: "utilities",
 };
 
 export default function RootLayout({
@@ -68,16 +63,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pl">
-      <head>
-        <meta
-          name="convertiser-verification"
-          content="0cd3fe0d75772d7926a17c7b2f7ea75c54188a1c"
-        />
-      </head>
-
       <body>
-        {children}
         <GoogleAnalytics />
+        {children}
       </body>
     </html>
   );

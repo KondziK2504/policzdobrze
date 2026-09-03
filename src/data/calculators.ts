@@ -9,6 +9,7 @@ export type Calculator = {
 };
 
 export const calculators: Calculator[] = [
+
   // =========================
   // MOTORYZACJA
   // =========================
@@ -29,7 +30,7 @@ export const calculators: Calculator[] = [
     icon: "⛽",
     name: "Kalkulator spalania",
     description:
-      "Oblicz średnie spalanie samochodu w l/100 km oraz koszt przejazdu.",
+      "Oblicz średnie spalanie samochodu w l/100 km oraz koszt przejechania 100 km.",
     category: "Motoryzacja",
     keywords:
       "spalanie samochód auto paliwo benzyna diesel l/100 km",
@@ -62,18 +63,6 @@ export const calculators: Calculator[] = [
   },
 
   {
-    icon: "🛞",
-    name: "Kalkulator opon – rozmiar i zamiennik",
-    description:
-      "Porównaj dwa rozmiary opon i sprawdź różnicę średnicy, obwodu, wysokości boku oraz wskazań prędkościomierza.",
-    category: "Motoryzacja",
-    keywords:
-      "opony kalkulator opon rozmiar zamiennik 205 55 R16 225 45 R17 średnica obwód prędkościomierz",
-    href: "/motoryzacja/opony",
-    status: "active",
-  },
-
-  {
     icon: "⛽",
     name: "Kalkulator LPG vs benzyna",
     description:
@@ -84,6 +73,19 @@ export const calculators: Calculator[] = [
     href: "#",
     status: "coming-soon",
   },
+
+  {
+    icon: "🛣️",
+    name: "Kalkulator kosztu podróży",
+    description:
+      "Oszacuj całkowity koszt samochodowej podróży.",
+    category: "Motoryzacja",
+    keywords:
+      "podróż samochodem wakacje trasa paliwo koszt",
+    href: "#",
+    status: "coming-soon",
+  },
+
 
   // =========================
   // BUDOWA I REMONT
@@ -161,6 +163,7 @@ export const calculators: Calculator[] = [
     status: "active",
   },
 
+
   // =========================
   // FINANSE
   // =========================
@@ -169,7 +172,7 @@ export const calculators: Calculator[] = [
     icon: "💵",
     name: "Kalkulator VAT",
     description:
-      "Oblicz kwotę netto, VAT i brutto dla wybranej stawki.",
+      "Oblicz kwotę netto, brutto oraz VAT dla wybranej stawki.",
     category: "Finanse",
     keywords:
       "vat netto brutto podatek cena faktura 23 8 5",
@@ -178,26 +181,14 @@ export const calculators: Calculator[] = [
   },
 
   {
-    icon: "🚗",
-    name: "Kalkulator leasingu samochodu",
+    icon: "🧾",
+    name: "Kalkulator brutto netto",
     description:
-      "Oszacuj ratę, wpłatę własną, wykup i całkowity koszt leasingu samochodu.",
+      "Przelicz cenę netto na brutto lub brutto na netto.",
     category: "Finanse",
     keywords:
-      "leasing samochodu kalkulator raty rata leasingowa auto wykup wpłata własna finansowanie",
-    href: "/finanse/leasing",
-    status: "active",
-  },
-
-  {
-    icon: "💼",
-    name: "Kalkulator wynagrodzenia brutto netto",
-    description:
-      "Oblicz orientacyjne wynagrodzenie netto dla umowy o pracę.",
-    category: "Finanse",
-    keywords:
-      "wynagrodzenie brutto netto pensja wypłata umowa o pracę zarobki 2026",
-    href: "/finanse/wynagrodzenie",
+      "brutto netto cena faktura pensja wynagrodzenie vat",
+    href: "/finanse/brutto-netto",
     status: "active",
   },
 
@@ -205,13 +196,50 @@ export const calculators: Calculator[] = [
     icon: "📊",
     name: "Kalkulator marży",
     description:
-      "Oblicz marżę, narzut, zysk i cenę sprzedaży.",
+      "Oblicz marżę, zysk i narzut na podstawie ceny zakupu oraz sprzedaży.",
     category: "Finanse",
     keywords:
-      "marża narzut zysk cena sprzedaży procent",
-    href: "#",
-    status: "coming-soon",
+      "marża marza zysk sprzedaż cena zakupu narzut procent",
+    href: "/finanse/marza",
+    status: "active",
   },
+
+  {
+    icon: "📈",
+    name: "Kalkulator narzutu",
+    description:
+      "Oblicz cenę sprzedaży na podstawie ceny zakupu i narzutu.",
+    category: "Finanse",
+    keywords:
+      "narzut cena zakupu cena sprzedaży zysk marża procent",
+    href: "/finanse/narzut",
+    status: "active",
+  },
+
+  {
+    icon: "%",
+    name: "Kalkulator procentów",
+    description:
+      "Oblicz procent z liczby, zmianę procentową oraz ile procent stanowi jedna liczba z drugiej.",
+    category: "Finanse",
+    keywords:
+      "procent procenty procentowa zmiana podwyżka obniżka",
+    href: "/finanse/procenty",
+    status: "active",
+  },
+
+  {
+    icon: "🏦",
+    name: "Kalkulator raty kredytu",
+    description:
+      "Oblicz orientacyjną ratę kredytu oraz całkowitą kwotę spłat.",
+    category: "Finanse",
+    keywords:
+      "rata kredytu kredyt pożyczka oprocentowanie rata miesięczna",
+    href: "/finanse/rata-kredytu",
+    status: "active",
+  },
+
 
   // =========================
   // DOM

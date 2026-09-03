@@ -1,4 +1,7 @@
-export function trackCalculatorUsed(calculator: string) {
+export function trackEvent(
+  eventName: string,
+  parameters: Record<string, string | number | boolean> = {},
+) {
   if (typeof window === "undefined") {
     return;
   }
@@ -8,7 +11,7 @@ export function trackCalculatorUsed(calculator: string) {
       gtag?: (
         command: string,
         eventName: string,
-        parameters?: Record<string, string>,
+        parameters?: Record<string, string | number | boolean>,
       ) => void;
     }
   ).gtag;
@@ -17,7 +20,11 @@ export function trackCalculatorUsed(calculator: string) {
     return;
   }
 
-  gtag("event", "calculator_used", {
+  gtag("event", eventName, parameters);
+}
+
+export function trackCalculatorUsed(calculator: string) {
+  trackEvent("calculator_used", {
     calculator,
   });
 }

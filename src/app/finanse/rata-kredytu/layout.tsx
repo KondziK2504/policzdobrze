@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Oblicz orientacyjną miesięczną ratę kredytu, sumę spłat oraz koszt odsetek.",
   alternates: {
-    canonical: "https://policzdobrze.pl/finanse/rata-kredytu",
+    canonical: "https://www.policzdobrze.pl/finanse/rata-kredytu",
   },
 };
 

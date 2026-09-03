@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { calculators } from "@/data/calculators";
 
-const siteUrl = "https://policzdobrze.pl";
+const siteUrl = "https://www.policzdobrze.pl";
 
 export const metadata: Metadata = {
   title: "Kalkulatory budowlane i remontowe – beton, płytki, farba",

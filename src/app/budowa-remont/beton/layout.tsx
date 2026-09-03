@@ -5,13 +5,13 @@ export const metadata: Metadata = {
   description:
     "Darmowy kalkulator betonu. Oblicz objętość betonu potrzebnego do fundamentu, płyty, posadzki lub innej konstrukcji.",
   alternates: {
-    canonical: "https://policzdobrze.pl/budowa-remont/beton",
+    canonical: "https://www.policzdobrze.pl/budowa-remont/beton",
   },
   openGraph: {
     title: "Kalkulator betonu – PoliczDobrze.pl",
     description:
       "Oblicz ilość potrzebnego betonu w metrach sześciennych.",
-    url: "https://policzdobrze.pl/budowa-remont/beton",
+    url: "https://www.policzdobrze.pl/budowa-remont/beton",
     siteName: "PoliczDobrze.pl",
     locale: "pl_PL",
     type: "website",

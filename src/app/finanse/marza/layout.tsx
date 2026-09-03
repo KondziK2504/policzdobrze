@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Oblicz marżę procentową, zysk oraz narzut na podstawie ceny zakupu i ceny sprzedaży.",
   alternates: {
-    canonical: "https://policzdobrze.pl/finanse/marza",
+    canonical: "https://www.policzdobrze.pl/finanse/marza",
   },
 };
 

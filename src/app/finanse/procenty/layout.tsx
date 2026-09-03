@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Oblicz procent z liczby, sprawdź ile procent stanowi jedna liczba z drugiej oraz oblicz podwyżkę lub obniżkę procentową.",
   alternates: {
-    canonical: "https://policzdobrze.pl/finanse/procenty",
+    canonical: "https://www.policzdobrze.pl/finanse/procenty",
   },
 };
 

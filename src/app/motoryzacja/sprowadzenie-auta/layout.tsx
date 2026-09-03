@@ -5,13 +5,13 @@ export const metadata: Metadata = {
   description:
     "Oblicz orientacyjny koszt sprowadzenia samochodu z zagranicy. Uwzględnij cenę auta, transport, akcyzę i dodatkowe koszty.",
   alternates: {
-    canonical: "https://policzdobrze.pl/motoryzacja/sprowadzenie-auta",
+    canonical: "https://www.policzdobrze.pl/motoryzacja/sprowadzenie-auta",
   },
   openGraph: {
     title: "Kalkulator sprowadzenia auta – PoliczDobrze.pl",
     description:
       "Oszacuj koszt importu samochodu z zagranicy.",
-    url: "https://policzdobrze.pl/motoryzacja/sprowadzenie-auta",
+    url: "https://www.policzdobrze.pl/motoryzacja/sprowadzenie-auta",
     siteName: "PoliczDobrze.pl",
     locale: "pl_PL",
     type: "website",

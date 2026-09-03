@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Przelicz cenę brutto na netto lub netto na brutto. Wybierz odpowiednią stawkę VAT.",
   alternates: {
-    canonical: "https://policzdobrze.pl/finanse/brutto-netto",
+    canonical: "https://www.policzdobrze.pl/finanse/brutto-netto",
   },
 };
 

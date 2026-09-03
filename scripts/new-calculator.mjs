@@ -525,7 +525,7 @@ async function main() {
       ];
 
   const siteUrl =
-    "https://policzdobrze.pl";
+    "https://www.policzdobrze.pl";
 
   const route =
     `/${category.path}/${slug}`;

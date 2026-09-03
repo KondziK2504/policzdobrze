@@ -5,13 +5,13 @@ export const metadata: Metadata = {
   description:
     "Darmowy kalkulator kosztu przejazdu samochodem. Oblicz koszt paliwa, koszt 100 km oraz koszt podróży na osobę.",
   alternates: {
-    canonical: "https://policzdobrze.pl/motoryzacja/koszt-przejazdu",
+    canonical: "https://www.policzdobrze.pl/motoryzacja/koszt-przejazdu",
   },
   openGraph: {
     title: "Kalkulator kosztu przejazdu – PoliczDobrze.pl",
     description:
       "Oblicz koszt przejazdu, potrzebne paliwo i koszt podróży na osobę.",
-    url: "https://policzdobrze.pl/motoryzacja/koszt-przejazdu",
+    url: "https://www.policzdobrze.pl/motoryzacja/koszt-przejazdu",
     siteName: "PoliczDobrze.pl",
     locale: "pl_PL",
     type: "website",

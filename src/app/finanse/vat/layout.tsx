@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description:
     "Oblicz kwotę netto, brutto i VAT dla stawek 23%, 8%, 5% lub 0%.",
   alternates: {
-    canonical: "https://policzdobrze.pl/finanse/vat",
+    canonical: "https://www.policzdobrze.pl/finanse/vat",
   },
 };
 

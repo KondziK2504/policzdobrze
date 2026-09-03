@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 type Mode = "part" | "share" | "change";
 
@@ -52,15 +52,6 @@ export default function ProcentyPage() {
     };
   })();
 
-  useEffect(() => {
-    if (!valid) return;
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("procenty");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [valid]);
 
   return (
     <CalculatorLayout
@@ -322,6 +313,11 @@ export default function ProcentyPage() {
 
       </div>
 
+
+      <CalculatorTracker
+        calculator="procenty"
+        isCalculated={valid}
+      />
     </CalculatorLayout>
   );
 }

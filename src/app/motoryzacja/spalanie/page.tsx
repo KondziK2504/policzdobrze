@@ -1,9 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 export default function SpalaniePage() {
   const [distance, setDistance] = useState("");
@@ -29,18 +28,6 @@ export default function SpalaniePage() {
     hasBasicData && price > 0
       ? liters * price
       : 0;
-
-  useEffect(() => {
-    if (!hasBasicData) {
-      return;
-    }
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("spalanie");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [hasBasicData]);
 
   return (
     <CalculatorLayout
@@ -88,6 +75,7 @@ export default function SpalaniePage() {
               </label>
 
               <div className="relative">
+
                 <input
                   type="text"
                   inputMode="decimal"
@@ -100,8 +88,10 @@ export default function SpalaniePage() {
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
                   km
                 </span>
+
               </div>
             </div>
+
 
             <div>
               <label className="mb-2 block text-sm font-semibold">
@@ -109,6 +99,7 @@ export default function SpalaniePage() {
               </label>
 
               <div className="relative">
+
                 <input
                   type="text"
                   inputMode="decimal"
@@ -121,8 +112,10 @@ export default function SpalaniePage() {
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
                   litrów
                 </span>
+
               </div>
             </div>
+
 
             <div>
               <label className="mb-2 block text-sm font-semibold">
@@ -133,6 +126,7 @@ export default function SpalaniePage() {
               </label>
 
               <div className="relative">
+
                 <input
                   type="text"
                   inputMode="decimal"
@@ -145,10 +139,12 @@ export default function SpalaniePage() {
                 <span className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-400">
                   zł/l
                 </span>
+
               </div>
             </div>
 
           </div>
+
 
           <div className="mt-7 rounded-2xl border border-blue-100 bg-blue-50 p-5">
 
@@ -165,6 +161,7 @@ export default function SpalaniePage() {
 
         </div>
 
+
         <div className="rounded-3xl bg-slate-950 p-7 text-white shadow-xl">
 
           <div className="flex items-center justify-between">
@@ -180,6 +177,7 @@ export default function SpalaniePage() {
             )}
 
           </div>
+
 
           {!hasBasicData ? (
 
@@ -223,6 +221,7 @@ export default function SpalaniePage() {
 
               </div>
 
+
               <div className="mt-4 grid gap-4 sm:grid-cols-2">
 
                 <div className="rounded-2xl bg-white/10 p-5">
@@ -236,6 +235,7 @@ export default function SpalaniePage() {
                   </div>
 
                 </div>
+
 
                 <div className="rounded-2xl bg-white/10 p-5">
 
@@ -251,11 +251,13 @@ export default function SpalaniePage() {
 
               </div>
 
+
               {price > 0 && (
 
                 <div className="mt-5 border-t border-white/10 pt-5">
 
                   <div className="flex items-center justify-between py-2">
+
                     <span className="text-slate-300">
                       Koszt 100 km
                     </span>
@@ -263,9 +265,12 @@ export default function SpalaniePage() {
                     <strong className="text-lg">
                       {costPer100.toFixed(2)} zł
                     </strong>
+
                   </div>
 
+
                   <div className="flex items-center justify-between py-2">
+
                     <span className="text-slate-300">
                       Koszt zużytego paliwa
                     </span>
@@ -273,6 +278,7 @@ export default function SpalaniePage() {
                     <strong className="text-lg">
                       {totalCost.toFixed(2)} zł
                     </strong>
+
                   </div>
 
                 </div>
@@ -299,6 +305,7 @@ export default function SpalaniePage() {
           zużytego paliwa przez przejechany dystans i pomnóż wynik
           przez 100.
         </p>
+
 
         <div className="mt-6 rounded-2xl bg-slate-50 p-5">
 

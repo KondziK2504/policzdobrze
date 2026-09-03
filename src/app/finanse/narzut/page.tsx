@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 export default function NarzutPage() {
   const [purchase, setPurchase] = useState("");
@@ -26,15 +26,6 @@ export default function NarzutPage() {
     ? (profit / sale) * 100
     : 0;
 
-  useEffect(() => {
-    if (!valid) return;
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("narzut");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [valid]);
 
   return (
     <CalculatorLayout
@@ -203,6 +194,11 @@ export default function NarzutPage() {
 
       </div>
 
+
+      <CalculatorTracker
+        calculator="narzut"
+        isCalculated={valid}
+      />
     </CalculatorLayout>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 export default function MarzaPage() {
   const [purchase, setPurchase] = useState("");
@@ -26,15 +26,6 @@ export default function MarzaPage() {
     ? (profit / purchaseValue) * 100
     : 0;
 
-  useEffect(() => {
-    if (!valid) return;
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("marza");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [valid]);
 
   return (
     <CalculatorLayout
@@ -196,6 +187,11 @@ export default function MarzaPage() {
 
       </div>
 
+
+      <CalculatorTracker
+        calculator="marza"
+        isCalculated={valid}
+      />
     </CalculatorLayout>
   );
 }

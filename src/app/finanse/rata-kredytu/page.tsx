@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 export default function RataKredytuPage() {
   const [amount, setAmount] = useState("");
@@ -49,15 +49,6 @@ export default function RataKredytuPage() {
     ? totalPayment - principal
     : 0;
 
-  useEffect(() => {
-    if (!valid) return;
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("rata_kredytu");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [valid]);
 
   return (
     <CalculatorLayout
@@ -280,6 +271,11 @@ export default function RataKredytuPage() {
 
       </div>
 
+
+      <CalculatorTracker
+        calculator="rata_kredytu"
+        isCalculated={valid}
+      />
     </CalculatorLayout>
   );
 }

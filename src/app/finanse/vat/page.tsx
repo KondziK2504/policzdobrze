@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 export default function VATPage() {
   const [amount, setAmount] = useState("");
@@ -31,15 +31,6 @@ export default function VATPage() {
 
   const vat = valid ? gross - net : 0;
 
-  useEffect(() => {
-    if (!valid) return;
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("vat");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [valid]);
 
   return (
     <CalculatorLayout
@@ -238,6 +229,11 @@ export default function VATPage() {
 
       </div>
 
+
+      <CalculatorTracker
+        calculator="vat"
+        isCalculated={valid}
+      />
     </CalculatorLayout>
   );
 }

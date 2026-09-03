@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CalculatorLayout from "@/components/CalculatorLayout";
+import CalculatorTracker from "@/components/CalculatorTracker";
 import { parseNumber } from "@/lib/number";
-import { trackCalculatorUsed } from "@/lib/analytics";
 
 export default function BruttoNettoPage() {
   const [amount, setAmount] = useState("");
@@ -31,15 +31,6 @@ export default function BruttoNettoPage() {
 
   const vat = valid ? gross - net : 0;
 
-  useEffect(() => {
-    if (!valid) return;
-
-    const timeout = setTimeout(() => {
-      trackCalculatorUsed("brutto_netto");
-    }, 500);
-
-    return () => clearTimeout(timeout);
-  }, [valid]);
 
   return (
     <CalculatorLayout
@@ -228,6 +219,11 @@ export default function BruttoNettoPage() {
 
       </div>
 
+
+      <CalculatorTracker
+        calculator="brutto_netto"
+        isCalculated={valid}
+      />
     </CalculatorLayout>
   );
 }

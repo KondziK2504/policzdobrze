@@ -239,7 +239,17 @@ export const calculators: Calculator[] = [
     href: "/finanse/rata-kredytu",
     status: "active",
   },
-
+  {
+    icon: "🏦",
+    name: "Kalkulator zdolności kredytowej",
+    description:
+      "Oszacuj orientacyjną zdolność kredytową na podstawie dochodu, kosztów i obecnych zobowiązań.",
+    category: "Finanse",
+    keywords:
+      "zdolność kredytowa kredyt hipoteczny kredyt rata dochód zarobki bank finansowanie",
+    href: "/finanse/zdolnosc-kredytowa",
+    status: "active",
+  },
 
   // =========================
   // DOM

@@ -274,6 +274,18 @@ export const calculators: Calculator[] = [
     status: "active",
   },
 
+  {
+    icon: "💳",
+    name: "Kalkulator kredytu gotówkowego",
+    description:
+      "Oblicz orientacyjną ratę, całkowity koszt kredytu oraz kwotę odsetek.",
+    category: "Finanse",
+    keywords:
+      "kredyt gotówkowy kalkulator rata pożyczka bank kredyt konsumencki odsetki koszt kredytu",
+    href: "/finanse/kredyt-gotowkowy",
+    status: "active",
+  },
+
   // =========================
   // DOM
   // =========================

@@ -262,6 +262,18 @@ export const calculators: Calculator[] = [
     status: "active",
   },
 
+  {
+    icon: "🏠",
+    name: "Kalkulator kredytu hipotecznego",
+    description:
+      "Oblicz orientacyjną ratę kredytu hipotecznego, całkowity koszt spłaty i wysokość odsetek.",
+    category: "Finanse",
+    keywords:
+      "kredyt hipoteczny kalkulator rata kredytu mieszkanie dom nieruchomość wkład własny oprocentowanie",
+    href: "/finanse/kredyt-hipoteczny",
+    status: "active",
+  },
+
   // =========================
   // DOM
   // =========================

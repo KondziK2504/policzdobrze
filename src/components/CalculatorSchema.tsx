@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 type CalculatorSchemaProps = {
   title: string;
@@ -17,14 +17,8 @@ export default function CalculatorSchema({
   categoryName = "Kalkulatory",
   categoryHref = "/",
 }: CalculatorSchemaProps) {
-  const [url, setUrl] = useState(siteUrl);
-
-  useEffect(() => {
-    const pathname =
-      window.location.pathname || "/";
-
-    setUrl(`${siteUrl}${pathname}`);
-  }, []);
+  const pathname = usePathname() || "/";
+  const url = `${siteUrl}${pathname}`;
 
   const calculatorSchema = {
     "@context": "https://schema.org",
@@ -43,10 +37,9 @@ export default function CalculatorSchema({
     },
   };
 
-  const categoryUrl =
-    categoryHref.startsWith("/")
-      ? `${siteUrl}${categoryHref}`
-      : siteUrl;
+  const categoryUrl = categoryHref.startsWith("/")
+    ? `${siteUrl}${categoryHref}`
+    : siteUrl;
 
   const breadcrumbSchema = {
     "@context": "https://schema.org",
@@ -78,18 +71,14 @@ export default function CalculatorSchema({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            calculatorSchema,
-          ),
+          __html: JSON.stringify(calculatorSchema),
         }}
       />
 
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: JSON.stringify(
-            breadcrumbSchema,
-          ),
+          __html: JSON.stringify(breadcrumbSchema),
         }}
       />
     </>

@@ -63,6 +63,18 @@ export const calculators: Calculator[] = [
   },
 
   {
+    icon: "🛡️",
+    name: "Kalkulator OC/AC",
+    description:
+      "Oszacuj orientacyjny koszt ubezpieczenia OC lub OC i AC samochodu.",
+    category: "Motoryzacja",
+    keywords:
+      "oc ac ubezpieczenie samochodu kalkulator składki polisa ubezpieczenie auta",
+    href: "/motoryzacja/oc-ac",
+    status: "active",
+  },
+
+  {
     icon: "⛽",
     name: "Kalkulator LPG vs benzyna",
     description:
@@ -85,7 +97,6 @@ export const calculators: Calculator[] = [
     href: "#",
     status: "coming-soon",
   },
-
 
   // =========================
   // BUDOWA I REMONT
@@ -163,7 +174,6 @@ export const calculators: Calculator[] = [
     status: "active",
   },
 
-
   // =========================
   // FINANSE
   // =========================
@@ -239,6 +249,7 @@ export const calculators: Calculator[] = [
     href: "/finanse/rata-kredytu",
     status: "active",
   },
+
   {
     icon: "🏦",
     name: "Kalkulator zdolności kredytowej",

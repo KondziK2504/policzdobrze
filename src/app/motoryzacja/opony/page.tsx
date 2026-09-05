@@ -45,10 +45,7 @@ function buildCeneoUrl(
   profile: number,
   rim: number,
 ) {
-  const search = `${width} ${profile} r${rim}`
-    .replace(/\s+/g, "+");
-
-  return `https://www.ceneo.pl/Opony_osobowe;szukaj-opony+${search}#crid=809544&pid=31174`;
+  return `https://www.ceneo.pl/Opony_osobowe/Profil%3A${profile}/Szerokosc%3A${width}/Srednica%3A${rim}.htm#crid=809544&pid=31174`;
 }
 
 const faqItems = [
